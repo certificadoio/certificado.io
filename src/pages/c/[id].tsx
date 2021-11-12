@@ -38,11 +38,7 @@ export interface CertificateToShow {
 export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
-    paths: [{
-      params: {
-        id: 'd3ea37e9-00db-4942-951c-4d87f8870f5b'
-      }
-    }],
+    paths: [],
     fallback: true
   }
 }

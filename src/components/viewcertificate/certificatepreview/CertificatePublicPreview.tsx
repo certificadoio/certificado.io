@@ -27,14 +27,16 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                 data?.themes_io.signature || '',
             ]
 
+            if (images[0] === '' || images[1] === '') return
+
             const response = await supabase.storage.from('images').download(images[0])
             const response2 = await supabase.storage.from('images').download(images[1])
 
             // if (response.error) { throw response.error }
             // if (response2.error) { throw response2.error }
 
-            const logo = URL.createObjectURL(response.data)
-            const signature = URL.createObjectURL(response2.data)
+            const logo = URL.createObjectURL(response?.data)
+            const signature = URL.createObjectURL(response2?.data)
 
             setImagesUrl({ signature: signature, logo: logo })
         })()
