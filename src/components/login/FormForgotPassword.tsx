@@ -1,13 +1,36 @@
-import { Flex, Text, Image, Button, FormControl, FormLabel, Input, Link as A } from '@chakra-ui/react'
+import { Flex, Text, Image, Button, FormControl, FormErrorMessage, FormLabel, Input, Link as A } from '@chakra-ui/react'
 
 import Link from 'next/link'
+import { useState } from 'react'
 import { theme } from '../../styles/theme'
+import { supabase } from '../../utils/supabaseClient'
 
 interface IProps {
     toggleForm: () => void
 }
 
+const initialError = {
+    email: '',
+}
 const FormForgotPassword: React.FC<IProps> = ({ toggleForm }) => {
+
+    const [email, setEmail] = useState('')
+    const [errors, setErrors] = useState(initialError)
+
+    const handleReset = async () => {
+        if (!email || email === "") return setErrors({
+            email: 'Por favor, preencha seu email'
+        })
+
+        let { data, error } = await supabase.auth.api.resetPasswordForEmail(email)
+
+        if (error) console.error(error)
+
+        return setErrors({
+            email: 'As instruções para login foram enviadas para o seu email'
+        })
+    }
+
     return (
         <Flex
             flex="1"
@@ -72,9 +95,12 @@ const FormForgotPassword: React.FC<IProps> = ({ toggleForm }) => {
                     direction="column"
                     padding="30px"
                 >
-                    <FormControl>
+                    <FormControl
+                        isInvalid={!!errors.email}
+                        id="email"
+                    >
                         <FormLabel
-                            id="email"
+
                             htmlFor="email"
                             fontWeight="500"
                             fontSize="14px"
@@ -83,13 +109,20 @@ const FormForgotPassword: React.FC<IProps> = ({ toggleForm }) => {
                         >
                             Email:
                         </FormLabel>
-                        <Input id="email" type="email" />
+                        <Input
+                            value={email}
+                            onChange={event => setEmail(event.target.value)}
+                            type="email"
+                        />
+                        <FormErrorMessage>{errors.email}</FormErrorMessage>
                     </FormControl>
 
                     <Button
                         background={theme.blue500}
                         color="#fff"
                         marginTop="32px"
+
+                        onClick={handleReset}
 
                         _hover={{
                             background: theme.blue300
@@ -99,7 +132,7 @@ const FormForgotPassword: React.FC<IProps> = ({ toggleForm }) => {
                     </Button>
                 </Flex>
             </Flex>
-        </Flex>
+        </Flex >
     )
 }
 
