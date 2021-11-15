@@ -7,10 +7,10 @@ import useSWR from 'swr'
 import { useEffect, useState } from 'react'
 import { supabase } from '../../../utils/supabaseClient'
 import useGlobal from '../../../store/useGlobal'
-
+import { useRouter } from 'next/router'
 
 const Courses: React.FC = () => {
-
+    const router = useRouter()
     const global = useGlobal(state => state)
 
     const [dataFiltered, setDataFiltered] = useState<IcourseDetails[] | null>(null)
@@ -20,6 +20,13 @@ const Courses: React.FC = () => {
         let { data: courses, error } = await supabase
             .from<IcourseDetails>('courses_io')
             .select('*')
+
+        if (error) console.error('ERROR', error)
+
+        if (error?.message === "JWSError JWSInvalidSignature") {
+            supabase.auth.signOut()
+            router.push('/login')
+        }
 
         return courses
     }
