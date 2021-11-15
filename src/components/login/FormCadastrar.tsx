@@ -6,18 +6,32 @@ import { useState } from 'react'
 import useGlobal from '../../store/useGlobal'
 import { theme } from '../../styles/theme'
 import { supabase } from '../../utils/supabaseClient'
-
+const initialError = {
+    email: '',
+    pass: '',
+}
 const FormCadastrar: React.FC = () => {
 
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
+    const [errors, setErrors] = useState(initialError)
 
     const global = useGlobal(state => state)
 
     const handleSubmit = async () => {
-        if (!email || !pass) return console.error('Por favor preencha sua informações corretamente')
 
-        if (email.indexOf('@') === -1 || email.indexOf('.') === -1) return console.error('Por favor preencha sua informações corretamente')
+        setIsLoading(true)
+
+        if (!email || !pass) return setErrors({
+            email: 'Preencha suas informações corretamente',
+            pass: 'Preencha suas informações corretamente',
+        })
+
+        if (email.indexOf('@') === -1 || email.indexOf('.') === -1) return setErrors({
+            email: 'Preencha um email válido',
+            pass: '',
+        })
 
         let { user, error } = await supabase.auth.signUp({
             email: email,
@@ -25,6 +39,8 @@ const FormCadastrar: React.FC = () => {
         })
 
         if (error) return console.error(error.message)
+
+        setIsLoading(false)
 
         return global.toggleModalCreatedNewUser()
     }
@@ -138,6 +154,7 @@ const FormCadastrar: React.FC = () => {
                     </FormControl>
 
                     <Button
+                        isLoading={isLoading}
                         background={theme.blue500}
                         color="#fff"
                         marginTop="32px"

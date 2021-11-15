@@ -1,4 +1,4 @@
-import { Flex, Text, Image, Button, FormControl, FormLabel, Input, Link as A } from '@chakra-ui/react'
+import { Flex, Text, Image, Button, FormControl, FormLabel, Input, Link as A, FormErrorMessage } from '@chakra-ui/react'
 
 import Link from 'next/link'
 import router from 'next/router'
@@ -10,22 +10,46 @@ interface IProps {
     toggleForm: () => void
 }
 
+const initialError = {
+    email: '',
+    pass: '',
+}
+
 const Form: React.FC<IProps> = ({ toggleForm }) => {
 
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
+    const [errors, setErrors] = useState(initialError)
 
     const handleSubmit = async () => {
-        if (!email || !pass) return console.error('Por favor preencha sua informações corretamente')
+        if (!email || !pass) return setErrors({
+            email: 'Verifique o email digitado',
+            pass: 'Verifique a senha digitada',
+        })
 
-        if (email.indexOf('@') === -1 || email.indexOf('.') === -1) return console.error('Por favor preencha sua informações corretamente')
+        if (email.indexOf('@') === -1 || email.indexOf('.') === -1) return setErrors({
+            email: 'Verifique o email digitado',
+            pass: '',
+        })
 
         let { user, error } = await supabase.auth.signIn({
             email: email,
             password: pass
         })
 
-        if (error) return console.error(error.message)
+        if (error?.message === "Email not confirmed") {
+            return setErrors({
+                email: 'Confirme seu email antes de acessar sua conta!',
+                pass: '',
+            })
+        }
+
+        if (error?.message === "Invalid login credentials") {
+            return setErrors({
+                email: 'Verifique o email digitado',
+                pass: 'Verifique a senha digitada',
+            })
+        }
 
         router.push('/')
     }
@@ -81,9 +105,11 @@ const Form: React.FC<IProps> = ({ toggleForm }) => {
                     direction="column"
                     padding="30px"
                 >
-                    <FormControl>
+                    <FormControl
+                        id="email"
+                        isInvalid={!!errors.email}
+                    >
                         <FormLabel
-                            id="email"
                             htmlFor="email"
                             fontWeight="500"
                             fontSize="14px"
@@ -93,22 +119,23 @@ const Form: React.FC<IProps> = ({ toggleForm }) => {
                             Email:
                         </FormLabel>
                         <Input
-                            id="email"
                             type="email"
                             defaultValue={email}
                             onChange={event => setEmail(event.target.value)}
                         />
+                        <FormErrorMessage>{errors.email}</FormErrorMessage>
                     </FormControl>
 
                     <FormControl
                         mt="22px"
+                        id="pass"
+                        isInvalid={!!errors.pass}
                     >
                         <Flex
                             align="center"
                             justify="space-between"
                         >
                             <FormLabel
-                                id="pass"
                                 htmlFor="pass"
                                 fontWeight="500"
                                 fontSize="14px"
@@ -129,11 +156,12 @@ const Form: React.FC<IProps> = ({ toggleForm }) => {
                             </A>
                         </Flex>
                         <Input
-                            id="pass"
                             type="password"
                             defaultValue={pass}
                             onChange={event => setPass(event.target.value)}
                         />
+
+                        <FormErrorMessage>{errors.pass}</FormErrorMessage>
                     </FormControl>
 
                     <Button
