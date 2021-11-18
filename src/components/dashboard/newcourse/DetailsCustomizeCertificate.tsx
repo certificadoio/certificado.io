@@ -20,8 +20,6 @@ const DetailsCustomizeCertificate = () => {
 
             <UploadFile
                 id="Logo"
-                hasFile={state.themeCertificate.logo}
-                onChange={(file) => state.setThemeCertificate({ ...state.themeCertificate, logo: file })}
             />
 
             <FormControl>
@@ -97,8 +95,6 @@ const DetailsCustomizeCertificate = () => {
 
             <UploadFile
                 id="Assinatura"
-                hasFile={state.themeCertificate.signature}
-                onChange={(file) => state.setThemeCertificate({ ...state.themeCertificate, signature: file })}
             />
 
             <FormControl>

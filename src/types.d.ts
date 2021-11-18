@@ -12,11 +12,11 @@ interface IcourseDetails {
 
 interface IThemeCertificate {
     certificate_model: string
-    logo: string
+    logo: File[]
     title: string
     subtitle: string
     graduated_in: string
-    signature: string
+    signature: File[]
     footer_signature: string
     primary_color: string
     secondary_color: string

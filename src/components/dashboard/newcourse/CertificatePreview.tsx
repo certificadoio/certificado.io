@@ -4,38 +4,53 @@ import { CertificateToShow } from '../../../pages/c/[id]'
 import useNewCourse from '../../../store/useNewCourse'
 import { supabase } from '../../../utils/supabaseClient'
 
-interface IState {
-    logo?: string,
-    signature?: string
-}
-
 const CertificatePreview: React.FC<CertificateToShow> = ({ data }) => {
 
     const state = useNewCourse(state => state)
-    const [imagesUrl, setImagesUrl] = useState<IState>({})
+    const [logoImg, setLogoImg] = useState("/")
+    const [signatureImg, setSignatureImg] = useState("/")
 
     let dateString = data?.created_at.substring(0, 10)
     let dateArray = dateString?.split('-') // yyyy-MM-dd
     let localDate = dateArray ? `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}` : ''
 
-    async function downloadImage(path: string, object: string) {
-        //recebe o nome da imagem
-        try {
-            const { data, error } = await supabase.storage.from('images').download(path)
+    // async function downloadImage(path: string, object: string) {
+    //     //recebe o nome da imagem
+    //     try {
+    //         const { data, error } = await supabase.storage.from('images').download(path)
 
-            if (error) { throw error }
+    //         if (error) { throw error }
 
-            const url = URL.createObjectURL(data)
+    //         const url = URL.createObjectURL(data)
 
-            setImagesUrl({ ...imagesUrl, [`${object}`]: url })
-        } catch (error) {
-            console.error('Error downloading image: ', error)
-        }
+    //         setImagesUrl({ ...imagesUrl, [`${object}`]: url })
+    //     } catch (error) {
+    //         console.error('Error downloading image: ', error)
+    //     }
+    // }
+
+    function blobToDataURL(blob: Blob, callback: (data: any) => void) {
+        var a = new FileReader();
+        a.onload = function (e: any) { callback(e.target.result); }
+        a.readAsDataURL(blob);
     }
 
     useEffect(() => {
-        if (state.themeCertificate.logo) downloadImage(state.themeCertificate.logo, 'logo')
-        if (state.themeCertificate.signature) downloadImage(state.themeCertificate.signature, 'signature')
+        if (state.themeCertificate.logo) {
+            const newBlob = new Blob(state.themeCertificate.logo)
+
+            blobToDataURL(newBlob, (data) => {
+                setLogoImg(data)
+            })
+        }
+
+        if (state.themeCertificate.signature) {
+            const newBlob = new Blob(state.themeCertificate.signature)
+
+            blobToDataURL(newBlob, (data) => {
+                setSignatureImg(data)
+            })
+        }
     }, [state.themeCertificate.logo, state.themeCertificate.signature])
 
     return (
@@ -96,11 +111,11 @@ const CertificatePreview: React.FC<CertificateToShow> = ({ data }) => {
                         fontWeight="700"
                         color={data?.themes_io ? data?.themes_io.primary_color : state.themeCertificate.primary_color}
                     >
-                        {imagesUrl.logo &&
-                            <Image src={imagesUrl.logo} alt="logo" />
+                        {logoImg &&
+                            <Image src={logoImg} alt="logo" />
                         }
 
-                        {!imagesUrl.logo &&
+                        {!logoImg &&
                             <Text>LOGO</Text>
                         }
                     </Flex>
@@ -149,10 +164,10 @@ const CertificatePreview: React.FC<CertificateToShow> = ({ data }) => {
                     width="100%"
                     maxWidth="270px"
                 >
-                    {imagesUrl.signature &&
+                    {signatureImg &&
                         <Image
                             position="absolute"
-                            src={imagesUrl.signature}
+                            src={signatureImg}
                             alt="signature"
                             mt="10px"
                             height="70px"

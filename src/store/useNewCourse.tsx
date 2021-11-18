@@ -11,11 +11,11 @@ const defaultCourse = {
 
 const defaultTheme = {
     certificate_model: 'default',
-    logo: '',
+    logo: [],
     title: '',
     subtitle: '',
     graduated_in: '',
-    signature: '',
+    signature: [],
     footer_signature: '',
     primary_color: '#000',
     secondary_color: '#808080',
