@@ -5,6 +5,7 @@ import useGlobal from '../../../store/useGlobal'
 import { theme } from '../../../styles/theme'
 import { supabase } from '../../../utils/supabaseClient'
 import axios from 'axios'
+import shortid from 'shortid'
 
 interface ICertificates {
     id: string,
@@ -36,9 +37,9 @@ const CertificateDetails = () => {
         email: "",
         created_at: "",
         owner_id: "",
-        theme_id: ""
+        theme_id: "",
+        id_view: "",
     })
-
     // Fetch data courses
 
     const fetcher = async () => {
@@ -78,7 +79,7 @@ const CertificateDetails = () => {
             let dataFormated = dataAtual.toLocaleDateString().split('/')
             const dataToSet = dataFormated[2] + '-' + dataFormated[1] + '-' + dataFormated[0]
 
-            setData({ ...data, owner_id: user?.id || "", created_at: dataToSet })
+            setData({ ...data, owner_id: user?.id || "", created_at: dataToSet, id_view: shortid.generate() })
         })()
 
     }, [])
@@ -102,7 +103,7 @@ const CertificateDetails = () => {
         const cert = response?.data[0].id || ''
 
         let sendEmail = await axios.post('/api/grid/send', {
-            id: response?.data[0].id,
+            id: response?.data[0].id_view,
             owner_id: response?.data[0].owner_id,
             email: response?.data[0].email,
             name: response?.data[0].name,

@@ -15,7 +15,8 @@ interface IProps {
         created_at: string,
         updated_at: string,
         theme_id: string,
-        owner_id: string
+        owner_id: string,
+        id_view: string,
     }
 }
 
@@ -59,7 +60,7 @@ const TableRow: React.FC<IProps> = ({ data }) => {
     })
 
     const handleLink = () => {
-        router.push(`/c/${data.id}`)
+        router.push(`/c/${data.id_view}`)
     }
 
     useEffect(() => {

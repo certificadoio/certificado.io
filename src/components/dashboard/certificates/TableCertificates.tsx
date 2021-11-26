@@ -16,7 +16,8 @@ interface Certificate {
     created_at: string,
     updated_at: string,
     theme_id: string,
-    owner_id: string
+    owner_id: string,
+    id_view: string,
 }
 
 const TableCertificates: React.FC = () => {

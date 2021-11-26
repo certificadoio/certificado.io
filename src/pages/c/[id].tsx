@@ -69,7 +69,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
           primary_bg_color,
           secondary_bg_color
         )`)
-    .eq('id', params?.id)
+    .eq('id_view', params?.id)
 
   if (error) console.error(error)
 
