@@ -22,23 +22,22 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
 
     useEffect(() => {
         (async () => {
-            const images = [
-                data?.themes_io.logo || '',
-                data?.themes_io.signature || '',
-            ]
 
-            if (images[0] === '' || images[1] === '') return
+            const logo = data?.themes_io.logo || ''
+            const signature = data?.themes_io.signature || ''
 
-            const response = await supabase.storage.from('images').download(images[0])
-            const response2 = await supabase.storage.from('images').download(images[1])
+            if (logo === '' || signature === '') return
 
-            // if (response.error) { throw response.error }
-            // if (response2.error) { throw response2.error }
+            const response = await supabase.storage.from('dev-images').download(logo)
+            const response2 = await supabase.storage.from('dev-images').download(signature)
 
-            const logo = URL.createObjectURL(response?.data)
-            const signature = URL.createObjectURL(response2?.data)
+            if (response.error) { throw response.error }
+            if (response2.error) { throw response2.error }
 
-            setImagesUrl({ signature: signature, logo: logo })
+            const logoUrl = URL.createObjectURL(response?.data)
+            const signatureUrl = URL.createObjectURL(response2?.data)
+
+            setImagesUrl({ signature: signatureUrl, logo: logoUrl })
         })()
     }, [data])
 
@@ -108,25 +107,32 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                                 borderRadius="100%"
                                 width="90px"
                                 height="90px"
+                                background="#fff"
                                 border="4px solid #DAE2FF"
                                 align="center"
                                 justify="center"
                                 boxShadow="0px 4px 24px rgba(0, 0, 0, 0.25)"
-                                background={`#fff url(${imagesUrl.logo}) center center / cover`}
+                                overflow="hidden"
                             >
-                                <Flex
-                                    display={!imagesUrl.logo ? "flex" : 'none'}
-                                    width="65px"
-                                    height="43px"
-                                    borderRadius="4px"
-                                    border="1px dashed rgba(0, 0, 0, 0.2)"
-                                    align="center"
-                                    justify="center"
-                                    fontWeight="700"
-                                    color={data?.themes_io ? data?.themes_io.primary_color : data?.themes_io.primary_color}
-                                >
-                                    {!imagesUrl.logo ? "Logo" : ''}
-                                </Flex>
+
+                                {imagesUrl.logo &&
+                                    <Image src={imagesUrl.logo} alt="logo" width="90px" height="90px" />
+                                }
+
+                                {!imagesUrl.logo &&
+                                    <Flex
+                                        width="65px"
+                                        height="43px"
+                                        borderRadius="4px"
+                                        border="1px dashed rgba(0, 0, 0, 0.2)"
+                                        align="center"
+                                        justify="center"
+                                        fontWeight="700"
+                                        color={data?.themes_io ? data?.themes_io.primary_color : ''}
+                                    >
+                                        <Text>LOGO</Text>
+                                    </Flex>
+                                }
                             </Flex>
                         </Flex>
 
@@ -174,13 +180,8 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                             >
                                 {imagesUrl.signature &&
                                     <Image
-                                        position="absolute"
                                         src={imagesUrl.signature}
                                         alt="signature"
-                                        mt="10px"
-                                        height="70px"
-                                        left="0"
-                                        right="0"
                                         mx="auto"
                                     />
                                 }

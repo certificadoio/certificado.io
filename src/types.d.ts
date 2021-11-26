@@ -12,11 +12,11 @@ interface IcourseDetails {
 
 interface IThemeCertificate {
     certificate_model: string
-    logo: File[]
+    logo: string
     title: string
     subtitle: string
     graduated_in: string
-    signature: File[]
+    signature: string
     footer_signature: string
     primary_color: string
     secondary_color: string
@@ -32,6 +32,8 @@ interface State {
     errors: string[],
     editMode: boolean,
     idToAction: string | null,
+    logoBlob: File | undefined,
+    signatureBlob: File | undefined,
 
     toggleEditMode: (id?: string) => void,
     addProgressCount: () => void,
@@ -40,6 +42,8 @@ interface State {
     resetData: () => void,
 
     setCourseDetails: (newCourse: IcourseDetails) => void,
+    setLogoBlob: (newBlob: File) => void,
+    setSignatureBlob: (newBlob: File) => void,
     setThemeCertificate: (newTheme: IThemeCertificate) => void,
     setErrors: (newErrors: string[]) => void,
 }

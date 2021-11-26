@@ -2,6 +2,7 @@ import { Flex, FormControl, FormErrorMessage, FormLabel, Input, Textarea } from 
 import React from 'react'
 import useNewCourse from '../../../store/useNewCourse'
 import UploadFile from './UploadFile'
+import UploadLogoImg from './UploadLogoImage'
 
 const DetailsCustomizeCertificate = () => {
 
@@ -18,9 +19,7 @@ const DetailsCustomizeCertificate = () => {
             maxHeight="508px"
         >
 
-            <UploadFile
-                id="Logo"
-            />
+            <UploadLogoImg id="Logo" />
 
             <FormControl>
                 <FormLabel

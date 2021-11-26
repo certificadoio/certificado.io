@@ -32,10 +32,13 @@ const MenuBottom = () => {
         }
 
         if (state.progressCount === 2) {
-            let response = checkThemeCertificate(state.themeCertificate)
-            if (response.length !== 0) return state.setErrors(response)
+            // let response = checkThemeCertificate(state.themeCertificate)
+            // if (response.length !== 0) return state.setErrors(response)
 
-            state.setErrors([])
+            // state.setErrors([])
+
+            // uploadImages()
+
             state.editMode ? updateCourse() : insertCourse()
         }
     }
@@ -68,10 +71,55 @@ const MenuBottom = () => {
         secondary_bg_color: string
     }
 
+    const uploadImages = async () => {
+        try {
+            setLoading(true)
+
+            if (state.logoBlob === undefined || state.signatureBlob === undefined) {
+                throw new Error('You must select an image to upload.')
+            }
+            // File logo
+            const fileLogoExt = state.logoBlob?.name.split('.').pop()
+            const fileLogoName = `${Math.random()}.${fileLogoExt}`
+            const fileLogoPath = `${fileLogoName}`
+            // File signature
+            const fileSignatureExt = state.logoBlob?.name.split('.').pop()
+            const fileSignatureName = `${Math.random()}.${fileSignatureExt}`
+            const fileSignaturePath = `${fileSignatureName}`
+
+            let response = await supabase.storage
+                .from('dev-images')
+                .upload(fileLogoPath, state.logoBlob)
+            if (response.error) {
+                throw response.error
+            }
+
+            let response2 = await supabase.storage
+                .from('dev-images')
+                .upload(fileSignaturePath, state.signatureBlob)
+            if (response2.error) {
+                throw response2.error
+            }
+
+            console.log(fileLogoPath, fileSignaturePath)
+
+            return { fileLogoPath, fileSignaturePath }
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     const insertCourse = async () => {
         // Função responsável por adicionar o curso
         setLoading(true)
+
+        const keysImages = await uploadImages()
+
+        console.log(keysImages)
+
+        if (keysImages?.fileLogoPath === undefined || keysImages.fileSignaturePath === undefined)
+            return console.error('Logo name ou Signature não identificado')
 
         // Criar o curso, pegar o id do curso e criar o tema com o id do curso
         const { data, error } = await supabase
@@ -80,28 +128,27 @@ const MenuBottom = () => {
 
         if (error) {
             setLoading(false)
-            return console.error(error.message)
+            throw new Error(error.message)
         }
 
-        let id = null
+        const course_id = data ? data[0].id : ""
 
-        data?.map(each => {
-            if (each.id.length !== 0) {
-                return id = each.id
-            }
-        })
-
-        if (id == null) {
-            setLoading(false)
-            return console.error('Course doesn\'t created')
+        let dataToSend = {
+            course_id: course_id,
+            ...state.themeCertificate,
         }
+
+        dataToSend = {
+            ...dataToSend,
+            logo: keysImages.fileLogoPath,
+            signature: keysImages.fileSignaturePath
+        }
+
+        console.log(dataToSend)
 
         const response = await supabase
             .from<Theme>('themes_io')
-            .insert({
-                course_id: id,
-                ...state.themeCertificate
-            })
+            .insert(dataToSend)
 
         if (response.error) {
             setLoading(false)

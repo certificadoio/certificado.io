@@ -8,7 +8,7 @@ interface IProps {
     id: string
 }
 
-const UploadFile: React.FC<IProps> = ({ id }) => {
+const UploadLogoImg: React.FC<IProps> = ({ id }) => {
 
     const state = useNewCourse(state => state)
     const [hasFile, setHasFile] = useState(false)
@@ -25,8 +25,9 @@ const UploadFile: React.FC<IProps> = ({ id }) => {
         if (!files?.length) return
 
         setHasFile(true)
-        state.setSignatureBlob(files[0])
+        state.setLogoBlob(files[0])
     }
+    console.log(state)
     return (
         <FormControl
             id={id}
@@ -74,9 +75,8 @@ const UploadFile: React.FC<IProps> = ({ id }) => {
             </FormLabel>
 
             <Input id={id} type="file" display="none" onChange={onChange} />
-
         </FormControl>
     )
 }
 
-export default UploadFile
+export default UploadLogoImg

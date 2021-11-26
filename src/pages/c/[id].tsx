@@ -46,7 +46,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const supabase = createClient(
-    'https://whdbcmbjecfqepequjpz.supabase.co',
+    'https://qoxryvzecwyagzrewdcn.supabase.co',
     process.env.SUPABASE_KEY || ''
   )
 
@@ -84,6 +84,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 }
 
 const ViewCertificate: React.FC<CertificateToShow> = ({ data }) => {
+
+  console.log(data)
 
   return (
     <>
@@ -135,7 +137,6 @@ const ViewCertificate: React.FC<CertificateToShow> = ({ data }) => {
             </Text>
 
             <CertificatePublicPreview data={data} />
-
 
           </Flex>
         </Flex>

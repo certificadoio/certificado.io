@@ -1,21 +1,21 @@
 import create from 'zustand'
 
 const defaultCourse = {
-    title: '',
-    description: '',
-    url_course: '',
-    workload: 0,
-    skills: '',
+    title: 'Curso teste',
+    description: 'description',
+    url_course: 'url course',
+    workload: 1,
+    skills: 'skills',
     owner_id: ''
 }
 
 const defaultTheme = {
     certificate_model: 'default',
-    logo: [],
-    title: '',
-    subtitle: '',
-    graduated_in: '',
-    signature: [],
+    logo: '',
+    title: 'title',
+    subtitle: 'aijsdiajsdiajsd',
+    graduated_in: 'uahsudahsduahsd',
+    signature: '',
     footer_signature: '',
     primary_color: '#000',
     secondary_color: '#808080',
@@ -31,6 +31,8 @@ const useNewCourse = create<State>(set => ({
     errors: [],
     editMode: false,
     idToAction: null,
+    logoBlob: undefined,
+    signatureBlob: undefined,
 
     toggleEditMode: (id) => set(state => ({ editMode: !state.editMode, idToAction: id || null })),
     addProgressCount: () => set(state => ({ progressCount: state.progressCount + 1 })),
@@ -39,6 +41,8 @@ const useNewCourse = create<State>(set => ({
     resetData: () => set(state => ({ courseDetails: defaultCourse, themeCertificate: defaultTheme })),
 
     setCourseDetails: (newCourse) => set(state => ({ courseDetails: newCourse })),
+    setLogoBlob: (newBlob) => set(state => ({ logoBlob: newBlob })),
+    setSignatureBlob: (newBlob) => set(state => ({ signatureBlob: newBlob })),
     setThemeCertificate: (newTheme) => set(state => ({ themeCertificate: newTheme })),
     setErrors: (newErrors) => set(state => ({ errors: newErrors }))
 }))

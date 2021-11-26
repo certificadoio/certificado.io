@@ -7,8 +7,8 @@ import { supabase } from '../../../utils/supabaseClient'
 const CertificatePreview: React.FC<CertificateToShow> = ({ data }) => {
 
     const state = useNewCourse(state => state)
-    const [logoImg, setLogoImg] = useState("/")
-    const [signatureImg, setSignatureImg] = useState("/")
+    const [logoImg, setLogoImg] = useState(null)
+    const [signatureImg, setSignatureImg] = useState(null)
 
     let dateString = data?.created_at.substring(0, 10)
     let dateArray = dateString?.split('-') // yyyy-MM-dd
@@ -36,22 +36,28 @@ const CertificatePreview: React.FC<CertificateToShow> = ({ data }) => {
     }
 
     useEffect(() => {
-        if (state.themeCertificate.logo) {
-            const newBlob = new Blob(state.themeCertificate.logo)
 
-            blobToDataURL(newBlob, (data) => {
+        console.log(state.logoBlob)
+
+        if (state.logoBlob) {
+            let blob = new Blob([state.logoBlob], { type: state.logoBlob.type })
+            blobToDataURL(blob, (data) => {
                 setLogoImg(data)
             })
         }
+    }, [state.logoBlob])
 
-        if (state.themeCertificate.signature) {
-            const newBlob = new Blob(state.themeCertificate.signature)
+    useEffect(() => {
 
-            blobToDataURL(newBlob, (data) => {
+        console.log(state.signatureBlob)
+
+        if (state.signatureBlob) {
+            let blob = new Blob([state.signatureBlob], { type: state.signatureBlob.type })
+            blobToDataURL(blob, (data) => {
                 setSignatureImg(data)
             })
         }
-    }, [state.themeCertificate.logo, state.themeCertificate.signature])
+    }, [state.signatureBlob])
 
     return (
         <Box
@@ -100,25 +106,27 @@ const CertificatePreview: React.FC<CertificateToShow> = ({ data }) => {
                     align="center"
                     justify="center"
                     boxShadow="0px 4px 24px rgba(0, 0, 0, 0.25)"
+                    overflow="hidden"
                 >
-                    <Flex
-                        width="65px"
-                        height="43px"
-                        borderRadius="4px"
-                        border="1px dashed rgba(0, 0, 0, 0.2)"
-                        align="center"
-                        justify="center"
-                        fontWeight="700"
-                        color={data?.themes_io ? data?.themes_io.primary_color : state.themeCertificate.primary_color}
-                    >
-                        {logoImg &&
-                            <Image src={logoImg} alt="logo" />
-                        }
 
-                        {!logoImg &&
+                    {logoImg &&
+                        <Image src={logoImg} alt="logo" width="90px" height="90px" />
+                    }
+
+                    {!state.logoBlob &&
+                        <Flex
+                            width="65px"
+                            height="43px"
+                            borderRadius="4px"
+                            border="1px dashed rgba(0, 0, 0, 0.2)"
+                            align="center"
+                            justify="center"
+                            fontWeight="700"
+                            color={data?.themes_io ? data?.themes_io.primary_color : state.themeCertificate.primary_color}
+                        >
                             <Text>LOGO</Text>
-                        }
-                    </Flex>
+                        </Flex>
+                    }
                 </Flex>
             </Flex>
 
@@ -166,13 +174,8 @@ const CertificatePreview: React.FC<CertificateToShow> = ({ data }) => {
                 >
                     {signatureImg &&
                         <Image
-                            position="absolute"
                             src={signatureImg}
                             alt="signature"
-                            mt="10px"
-                            height="70px"
-                            left="0"
-                            right="0"
                             mx="auto"
                         />
                     }
