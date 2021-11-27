@@ -225,7 +225,7 @@ const CertificatePreview: React.FC<CertificateToShow> = ({ data }) => {
                 color={state.themeCertificate.secondary_color}
             >
                 <Text>Data de emissão: {localDate}</Text>
-                <Text>Código: {data?.id}</Text>
+                <Text>Código: {data?.id_view}</Text>
             </Flex>
 
         </Box>
