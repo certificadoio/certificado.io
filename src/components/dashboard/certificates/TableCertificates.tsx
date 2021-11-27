@@ -7,21 +7,11 @@ import NoCertificate from './NoCertificate'
 import Pagination from './Pagination'
 import TableHead from './TableHead'
 import TableRow from './TableRow'
-
-interface Certificate {
-    id: string,
-    course_id: string,
-    name: string,
-    email: string,
-    created_at: string,
-    updated_at: string,
-    theme_id: string,
-    owner_id: string,
-    id_view: string,
-}
+import { useRouter } from 'next/router'
 
 const TableCertificates: React.FC = () => {
 
+    const router = useRouter()
     const global = useGlobal(state => state)
 
     const [dataFiltered, setDataFiltered] = useState<Certificate[] | null>(null)
@@ -30,6 +20,13 @@ const TableCertificates: React.FC = () => {
         let { data: certificates, error } = await supabase
             .from<Certificate>('certificates_io')
             .select('*')
+
+        if (error) console.error('ERROR', error)
+
+        if (error?.message === "JWSError JWSInvalidSignature") {
+            supabase.auth.signOut()
+            router.push('/login')
+        }
 
         return certificates
     }

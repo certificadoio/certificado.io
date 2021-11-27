@@ -25,6 +25,18 @@ interface IThemeCertificate {
     owner_id: string | undefined
 }
 
+interface Certificate {
+    id: string,
+    course_id: string,
+    name: string,
+    email: string,
+    created_at: string,
+    updated_at: string,
+    theme_id: string,
+    owner_id: string,
+    id_view: string,
+}
+
 interface State {
     progressCount: number,
     courseDetails: IcourseDetails,

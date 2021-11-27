@@ -144,6 +144,13 @@ const CertificateDetails = () => {
 
         if (response.error) return console.error(response.error)
 
+        let sendEmail = await axios.post('/api/grid/send', {
+            id: response?.data[0].id_view,
+            owner_id: response?.data[0].owner_id,
+            email: response?.data[0].email,
+            name: response?.data[0].name,
+        })
+
         if (response.data.length !== 0) {
             global.toggleModalCertificateEdited()
         }
