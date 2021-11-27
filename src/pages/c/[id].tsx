@@ -16,7 +16,7 @@ export interface CertificateToShow {
   data?: {
     created_at: string,
     name: string,
-    id: string
+    id_view: string
     courses_io: {
       title: string,
     },
@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   let { data, error } = await supabase
     .from('certificates_io')
     .select(`
-        created_at, name, id,
+        created_at, name, id_view,
         courses_io (
           title
         ),

@@ -232,7 +232,7 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                             textAlign="center"
                         >
                             <Text>Data de emissão: {localDate}</Text>
-                            <Text>Código: {data?.id}</Text>
+                            <Text>Código: {data?.id_view}</Text>
                         </Flex>
 
                     </Box>
