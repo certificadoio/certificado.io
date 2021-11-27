@@ -28,7 +28,7 @@ const handler: NextApiHandler = async (req, res) => {
         e você pode conferir clicando no link a seguir!
         <p>
         <br/>
-        <a href="https://certificado-io.vercel.app/c/${req.body.id}">Ver certificado</a>
+        <a href="https://certificado.io/c/${req.body.id}">Ver certificado</a>
         `
     }
 
