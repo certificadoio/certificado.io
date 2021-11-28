@@ -90,7 +90,7 @@ const ViewCertificate: React.FC<CertificateToShow> = ({ data }) => {
   return (
     <>
       <Container>
-        <HeaderViewCertificate />
+        <HeaderViewCertificate data={data} />
 
         <Flex
           position="relative"
