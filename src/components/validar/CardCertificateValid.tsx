@@ -8,7 +8,7 @@ interface ICertificate {
         title: string
     },
     created_at: string,
-    id: string,
+    id_view: string,
     name: string,
     themes_io: {
         title: string
@@ -101,7 +101,7 @@ const CardCertificateValid: React.FC<IProps> = ({ certificate }) => {
                         }}
 
                         onClick={() => {
-                            router.push(`/c/${certificate.id}`)
+                            router.push(`/c/${certificate.id_view}`)
                         }}
 
                     >
@@ -138,7 +138,7 @@ const CardCertificateValid: React.FC<IProps> = ({ certificate }) => {
                         <Text
                             fontWeight="500"
                         >
-                            {certificate.id}
+                            {certificate.id_view}
                         </Text>
                     </Box>
 

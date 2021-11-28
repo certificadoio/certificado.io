@@ -6,7 +6,7 @@ interface ICertificate {
         title: string
     },
     created_at: string,
-    id: string,
+    id_view: string,
     name: string,
     themes_io: {
         title: string
@@ -48,7 +48,7 @@ const Validar: React.FC = () => {
             <HeaderValidar />
 
             <ContainerValidar>
-                {!certificate?.id &&
+                {!certificate?.id_view &&
                     <CardVerify
                         certificateId={certificateId}
                         setCertificateId={setCertificateId}
@@ -56,7 +56,7 @@ const Validar: React.FC = () => {
                         getCertificate={getCertificate}
                     />
                 }
-                {certificate?.id &&
+                {certificate?.id_view &&
                     <CardCertificateValid
                         certificate={certificate}
                     />

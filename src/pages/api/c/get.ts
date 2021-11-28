@@ -15,21 +15,21 @@ const handler: NextApiHandler = async (req, res) => {
     // para poder ter acesso a todos os dados e retornar
     // o específico.
     const supabase = createClient(
-        'https://whdbcmbjecfqepequjpz.supabase.co',
+        'https://qoxryvzecwyagzrewdcn.supabase.co',
         process.env.SUPABASE_KEY || ''
     )
 
     let { data, error } = await supabase
         .from('certificates_io')
         .select(`
-            created_at, name, id,
+            created_at, name, id_view,
             courses_io (
               title
             ),
             themes_io (
               title
             )`)
-        .eq('id', certificateId)
+        .eq('id_view', certificateId)
 
     if (error) console.error(error)
 
