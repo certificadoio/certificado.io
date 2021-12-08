@@ -14,6 +14,11 @@ export default function Actions() {
     const router = useRouter()
 
     const handleNewCertificate = () => {
+
+        if (global.certificatesLength >= 10) {
+            return global.toggleModalLimitCertificate()
+        }
+
         global.resetidToAction()
         router.push('/certificado')
     }

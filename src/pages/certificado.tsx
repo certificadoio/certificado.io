@@ -10,8 +10,13 @@ import {
 } from '../components'
 import ModalCertificateCreated from '../components/dashboard/modal/ModalCertificateCreated'
 import ModalCertificateEdited from '../components/dashboard/modal/ModalCertificateEdited'
+import useGlobal from '../store/useGlobal'
 
 const index: React.FC = () => {
+
+  const global = useGlobal(state => state)
+
+  console.log(global.certificatesLength)
   return (
     <AuthProvider>
       <Container>

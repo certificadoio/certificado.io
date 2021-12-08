@@ -6,13 +6,16 @@ import {
   Certificates,
   AuthProvider,
 } from '../components'
-
+import LimitCertificate from '../components/dashboard/LimitCertificate'
 import ModalDeleteCertificate from '../components/dashboard/modal/ModalDeleteCertificate'
+import ModalLimitCertificate from '../components/dashboard/modal/ModalLimitCertificate'
 
 const index: React.FC = () => {
   return (
     <AuthProvider>
+
       <Container>
+        <LimitCertificate />
         <Header certificates={true} />
 
         <MaxWidth>
@@ -20,8 +23,11 @@ const index: React.FC = () => {
         </MaxWidth>
 
       </Container>
+
       <Footer />
+
       <ModalDeleteCertificate />
+      <ModalLimitCertificate />
     </AuthProvider>
   )
 }

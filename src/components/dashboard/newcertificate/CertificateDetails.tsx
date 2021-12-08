@@ -6,6 +6,7 @@ import { theme } from '../../../styles/theme'
 import { supabase } from '../../../utils/supabaseClient'
 import axios from 'axios'
 import shortid from 'shortid'
+import { useRouter } from 'next/router'
 
 interface ICertificates {
     id: string,
@@ -88,7 +89,7 @@ const CertificateDetails = () => {
 
         if (
             data.course_id === "" || data.name === ""
-            || data.email === "" || data.created_at === ""
+            || data.email === "" || data.created_at === "" || data.email.indexOf("@") === -1
         ) {
             return console.error('Nenhum campo pode ser vazio')
         }
