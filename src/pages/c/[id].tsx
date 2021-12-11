@@ -9,7 +9,7 @@ import {
 
 import Link from 'next/link'
 import HeaderViewCertificate from '../../components/viewcertificate/header'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { createClient } from '@supabase/supabase-js'
 
 export interface CertificateToShow {
@@ -92,7 +92,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 }
 
-const ViewCertificate: React.FC<CertificateToShow> = ({ data }) => {
+const ViewCertificate: NextPage<CertificateToShow> = ({ data }) => {
 
   console.log(data)
 

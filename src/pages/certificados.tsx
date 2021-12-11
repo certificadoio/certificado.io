@@ -1,3 +1,4 @@
+import { NextPage } from 'next'
 import {
   Container,
   Header,
@@ -10,7 +11,7 @@ import LimitCertificate from '../components/dashboard/LimitCertificate'
 import ModalDeleteCertificate from '../components/dashboard/modal/ModalDeleteCertificate'
 import ModalLimitCertificate from '../components/dashboard/modal/ModalLimitCertificate'
 
-const index: React.FC = () => {
+const Certificados: NextPage = () => {
   return (
     <AuthProvider>
 
@@ -32,4 +33,4 @@ const index: React.FC = () => {
   )
 }
 
-export default index
+export default Certificados

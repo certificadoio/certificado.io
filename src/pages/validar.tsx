@@ -1,3 +1,4 @@
+import { NextPage } from 'next'
 import { useState } from 'react'
 import { CardCertificateValid, CardVerify, ContainerValidar, FooterValidar, HeaderValidar } from '../components'
 
@@ -13,7 +14,7 @@ interface ICertificate {
     }
 }
 
-const Validar: React.FC = () => {
+const Validar: NextPage = () => {
 
     const [certificateId, setCertificateId] = useState('')
     const [certificate, setCertificate] = useState<ICertificate | null>(null)

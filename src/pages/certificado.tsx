@@ -1,3 +1,4 @@
+import { NextPage } from 'next'
 import {
   Container,
   Header,
@@ -12,7 +13,7 @@ import ModalCertificateCreated from '../components/dashboard/modal/ModalCertific
 import ModalCertificateEdited from '../components/dashboard/modal/ModalCertificateEdited'
 import useGlobal from '../store/useGlobal'
 
-const index: React.FC = () => {
+const Certificado: NextPage = () => {
 
   const global = useGlobal(state => state)
 
@@ -36,4 +37,4 @@ const index: React.FC = () => {
   )
 }
 
-export default index
+export default Certificado

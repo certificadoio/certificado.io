@@ -2,8 +2,9 @@ import { Container, Header, Form, Footer, FormForgotPassword, FormCadastrar } fr
 
 import { useState } from 'react'
 import ModalCreatedNewUser from '../components/login/ModalCreatedNewUser'
+import { NextPage } from 'next'
 
-const Login = () => {
+const Login: NextPage = () => {
 
     const [toggleFormForgot, setToggle] = useState(true)
 

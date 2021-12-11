@@ -1,3 +1,4 @@
+import { NextPage } from 'next'
 import {
   Container,
   Header,
@@ -10,7 +11,7 @@ import {
   AuthProvider,
 } from '../components'
 
-const index: React.FC = () => {
+const Curso: NextPage = () => {
   return (
     <AuthProvider>
       <Container>
@@ -30,4 +31,4 @@ const index: React.FC = () => {
   )
 }
 
-export default index
+export default Curso

@@ -3,8 +3,9 @@ import { Container, Header, Form, Footer, FormForgotPassword } from '../componen
 import { useEffect, useState } from 'react'
 import { supabase } from '../utils/supabaseClient'
 import router from 'next/router'
+import { NextPage } from 'next'
 
-const Login = () => {
+const Login: NextPage = () => {
 
     const [toggleFormForgot, setToggle] = useState(true)
 

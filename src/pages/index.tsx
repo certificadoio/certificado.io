@@ -1,3 +1,4 @@
+import { NextPage } from 'next'
 import {
   Container,
   Header,
@@ -9,7 +10,7 @@ import {
 } from '../components'
 import ModalViewDetailsCourse from '../components/dashboard/modal/ModalViewDetailsCourse'
 
-const index: React.FC = () => {
+const Home: NextPage = () => {
   return (
     <AuthProvider>
       <Container>
@@ -27,4 +28,4 @@ const index: React.FC = () => {
   )
 }
 
-export default index
+export default Home
