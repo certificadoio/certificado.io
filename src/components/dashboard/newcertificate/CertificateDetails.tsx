@@ -170,7 +170,7 @@ const CertificateDetails = () => {
         if (error) console.error(error.message)
 
         if (!error) {
-            const theme_id = themes ? themes[0].id : undefined
+            const theme_id = themes ? themes[0]?.id : undefined
 
             if (!theme_id) return console.error('Error')
 

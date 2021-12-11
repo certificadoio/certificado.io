@@ -1,4 +1,4 @@
-import { Tr, Td, Text, Flex, Image, Box } from '@chakra-ui/react'
+import { Tr, Td, Text, Flex, Image, Box, Link as A } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
@@ -111,12 +111,14 @@ const TableRow: React.FC<IProps> = ({ data }) => {
                     >
                         <Image src="/assets/icons/edit.svg" alt="" />
                     </Box>
-                    <Box
-                        cursor="pointer"
-                        onClick={handleLink}
+                    <A
+                        href={`/c/${data.id_view}`}
+                        target={"_blank"}
+                    // cursor="pointer"
+                    // onClick={handleLink}
                     >
                         <Image src="/assets/icons/link.svg" alt="" />
-                    </Box>
+                    </A>
                     <Box
                         cursor="pointer"
                         onClick={handleDelete}

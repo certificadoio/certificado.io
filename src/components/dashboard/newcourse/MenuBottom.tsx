@@ -71,39 +71,63 @@ const MenuBottom = () => {
         secondary_bg_color: string
     }
 
-    const uploadImages = async () => {
+    // const uploadImages = async () => {
+    //     try {
+    //         setLoading(true)
+
+    //         if (state.logoBlob === undefined || state.signatureBlob === undefined) {
+    //             throw new Error('You must select an image to upload.')
+    //         }
+
+    //         // File logo
+    //         const fileLogoExt = state.logoBlob?.name.split('.').pop()
+    //         const fileLogoName = `${Math.random()}.${fileLogoExt}`
+    //         const fileLogoPath = `${fileLogoName}`
+    //         // File signature
+    //         const fileSignatureExt = state.logoBlob?.name.split('.').pop()
+    //         const fileSignatureName = `${Math.random()}.${fileSignatureExt}`
+    //         const fileSignaturePath = `${fileSignatureName}`
+
+    //         let response = await supabase.storage
+    //             .from('images')
+    //             .upload(fileLogoPath, state.logoBlob)
+    //         if (response.error) {
+    //             throw response.error
+    //         }
+
+    //         let response2 = await supabase.storage
+    //             .from('images')
+    //             .upload(fileSignaturePath, state.signatureBlob)
+    //         if (response2.error) {
+    //             throw response2.error
+    //         }
+
+    //         console.log(fileLogoPath, fileSignaturePath)
+
+    //         return { fileLogoPath, fileSignaturePath }
+
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
+
+    const uploadImage = async (image: File) => {
         try {
-            setLoading(true)
+            const fileExt = image.name.split('.').pop()
+            const fileName = `${Math.random()}.${fileExt}`
+            const filePath = `${fileName}`
 
-            if (state.logoBlob === undefined || state.signatureBlob === undefined) {
-                throw new Error('You must select an image to upload.')
-            }
-            // File logo
-            const fileLogoExt = state.logoBlob?.name.split('.').pop()
-            const fileLogoName = `${Math.random()}.${fileLogoExt}`
-            const fileLogoPath = `${fileLogoName}`
-            // File signature
-            const fileSignatureExt = state.logoBlob?.name.split('.').pop()
-            const fileSignatureName = `${Math.random()}.${fileSignatureExt}`
-            const fileSignaturePath = `${fileSignatureName}`
+            let { data, error } = await supabase.storage
+                .from('images')
+                .upload(filePath, image)
 
-            let response = await supabase.storage
-                .from('dev-images')
-                .upload(fileLogoPath, state.logoBlob)
-            if (response.error) {
-                throw response.error
+            if (error) {
+                throw error
             }
 
-            let response2 = await supabase.storage
-                .from('dev-images')
-                .upload(fileSignaturePath, state.signatureBlob)
-            if (response2.error) {
-                throw response2.error
-            }
+            console.log('Successfully uploaded image', filePath, data);
 
-            console.log(fileLogoPath, fileSignaturePath)
-
-            return { fileLogoPath, fileSignaturePath }
+            return filePath
 
         } catch (error) {
             console.error(error)
@@ -112,14 +136,31 @@ const MenuBottom = () => {
 
     const insertCourse = async () => {
         // Função responsável por adicionar o curso
+
         setLoading(true)
 
-        const keysImages = await uploadImages()
+        let keysImages = {
+            fileLogoPath: '',
+            fileSignaturePath: ''
+        }
 
-        console.log(keysImages)
+        if (state.logoBlob) {
+            const res = await uploadImage(state.logoBlob);
+            if (!res) return
+            keysImages = {
+                ...keysImages,
+                fileLogoPath: res
+            }
+        }
 
-        if (keysImages?.fileLogoPath === undefined || keysImages.fileSignaturePath === undefined)
-            return console.error('Logo name ou Signature não identificado')
+        if (state.signatureBlob) {
+            const res = await uploadImage(state.signatureBlob);
+            if (!res) return
+            keysImages = {
+                ...keysImages,
+                fileSignaturePath: res
+            }
+        }
 
         // Criar o curso, pegar o id do curso e criar o tema com o id do curso
         const { data, error } = await supabase

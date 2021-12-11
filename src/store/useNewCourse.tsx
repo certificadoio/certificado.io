@@ -1,20 +1,20 @@
 import create from 'zustand'
 
 const defaultCourse = {
-    title: 'Curso teste',
-    description: 'description',
-    url_course: 'url course',
-    workload: 1,
-    skills: 'skills',
+    title: '',
+    description: '',
+    url_course: '',
+    workload: 0,
+    skills: '',
     owner_id: ''
 }
 
 const defaultTheme = {
-    certificate_model: 'default',
+    certificate_model: '',
     logo: '',
-    title: 'title',
-    subtitle: 'aijsdiajsdiajsd',
-    graduated_in: 'uahsudahsduahsd',
+    title: '',
+    subtitle: '',
+    graduated_in: '',
     signature: '',
     footer_signature: '',
     primary_color: '#000',
