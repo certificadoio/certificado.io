@@ -46,7 +46,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const supabase = createClient(
-    'https://qoxryvzecwyagzrewdcn.supabase.co',
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.SUPABASE_KEY || ''
   )
 
@@ -74,6 +74,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (error) console.error(error)
 
   const dataToSend = data ? data[0] : undefined
+
+  if (!dataToSend) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/'
+      }
+    }
+  }
 
   return {
     props: {

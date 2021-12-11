@@ -59,3 +59,48 @@ interface State {
     setThemeCertificate: (newTheme: IThemeCertificate) => void,
     setErrors: (newErrors: string[]) => void,
 }
+
+
+// Interfaces do database
+
+interface courses_io {
+    id: string, //uuid
+    created_at: string, //timestamp
+    title: string, //
+    description: string, //
+    url_course: string, //
+    workload: number, //
+    skills: string, //
+    updated_at: string, //timestamp
+    owner_id: string, //uuid
+}
+
+interface themes_io {
+    id: string, //uuid
+    created_at: string, //timestamp
+    certificate_model: string,
+    course_id: string, //uuid
+    footer_signature: string,
+    graduated_in: string,
+    logo: string,
+    updated_at: string, //timestamp
+    owner_id: string, //uuid
+    primary_bg_color: string,
+    primary_color: string,
+    secondary_bg_color: string,
+    secondary_color: string,
+    signature: string,
+    subtitle: string,
+    title: string,
+}
+
+interface certificates_io {
+    id: string, //uuid
+    course_id: string, //uuid
+    owner_id: string, //uuid
+    updated_at: string, //timestamp
+    email: string,
+    name: string,
+    theme_id: string, //uuid
+    id_view: string,
+}
