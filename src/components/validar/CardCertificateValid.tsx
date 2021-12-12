@@ -1,4 +1,4 @@
-import { Flex, Text, Input, Button, Image, Box } from '@chakra-ui/react'
+import { Flex, Text, Input, Button, Image, Box, Link as A } from '@chakra-ui/react'
 import router from 'next/router'
 import { useState } from 'react'
 import { theme } from '../../styles/theme'
@@ -20,8 +20,6 @@ interface IProps {
 }
 
 const CardCertificateValid: React.FC<IProps> = ({ certificate }) => {
-
-    console.log(certificate)
 
     let dateString = certificate?.created_at.substring(0, 10)
     let dateArray = dateString?.split('-') // yyyy-MM-dd
@@ -87,7 +85,8 @@ const CardCertificateValid: React.FC<IProps> = ({ certificate }) => {
                         Seu certificado foi verificado e está válido.
                     </Text>
 
-                    <Button
+                    <A
+                        href={`/c/${certificate.id_view}`}
                         mt="27px"
                         fontSize="14px"
                         fontWeight="600"
@@ -99,14 +98,9 @@ const CardCertificateValid: React.FC<IProps> = ({ certificate }) => {
                         _hover={{
                             background: theme.blue600
                         }}
-
-                        onClick={() => {
-                            router.push(`/c/${certificate.id_view}`)
-                        }}
-
                     >
                         Acesse o certificado
-                    </Button>
+                    </A>
                 </Flex>
             </Flex>
             <Flex
@@ -127,8 +121,11 @@ const CardCertificateValid: React.FC<IProps> = ({ certificate }) => {
 
                 <Flex
                     mt="27px"
+                // gridGap={100}
                 >
-                    <Box mr="50px">
+                    <Box
+                        width={300}
+                    >
                         <Text
                             fontSize="14px"
                             color="#666"
@@ -159,9 +156,8 @@ const CardCertificateValid: React.FC<IProps> = ({ certificate }) => {
 
                 <Flex
                     mt="27px"
-                    justify="space-between"
                 >
-                    <Box>
+                    <Box width={300}>
                         <Text
                             fontSize="14px"
                             color="#666"
@@ -180,20 +176,6 @@ const CardCertificateValid: React.FC<IProps> = ({ certificate }) => {
                             fontSize="14px"
                             color="#666"
                         >
-                            Instituição
-                        </Text>
-                        <Text
-                            fontWeight="500"
-                        >
-                            ?????
-                        </Text>
-                    </Box>
-
-                    <Box>
-                        <Text
-                            fontSize="14px"
-                            color="#666"
-                        >
                             Curso
                         </Text>
                         <Text
@@ -203,8 +185,8 @@ const CardCertificateValid: React.FC<IProps> = ({ certificate }) => {
                         </Text>
                     </Box>
                 </Flex>
-            </Flex>
-        </Flex>
+            </Flex >
+        </Flex >
     )
 }
 

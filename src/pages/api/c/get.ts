@@ -15,7 +15,7 @@ const handler: NextApiHandler = async (req, res) => {
     // para poder ter acesso a todos os dados e retornar
     // o específico.
     const supabase = createClient(
-        'https://qoxryvzecwyagzrewdcn.supabase.co',
+        process.env.NEXT_PUBLIC_SUPABASE_URL || '',
         process.env.SUPABASE_KEY || ''
     )
 

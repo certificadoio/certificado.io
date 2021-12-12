@@ -33,20 +33,20 @@ const Header: React.FC = () => {
                     </A>
                 </Link>
 
-                <Link href="/login">
-                    <A>
-                        <Flex
-                            align="center"
+
+                <A href="https://certificado.io/">
+                    <Flex
+                        align="center"
+                    >
+                        <MdKeyboardArrowLeft fontSize="30px" color={theme.blue500} />
+                        <Text
+                            display={["none", "inline"]}
                         >
-                            <MdKeyboardArrowLeft fontSize="30px" color={theme.blue500} />
-                            <Text
-                                display={["none", "inline"]}
-                            >
-                                Voltar para o site
-                            </Text>
-                        </Flex>
-                    </A>
-                </Link>
+                            Voltar para o site
+                        </Text>
+                    </Flex>
+                </A>
+
             </Flex>
         </Flex>
     )
