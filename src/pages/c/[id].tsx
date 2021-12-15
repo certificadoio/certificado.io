@@ -7,7 +7,7 @@ import {
   CertificatePublicPreview
 } from '../../components'
 
-import Link from 'next/link'
+import Head from 'next/head'
 import HeaderViewCertificate from '../../components/viewcertificate/header'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { createClient } from '@supabase/supabase-js'
@@ -98,6 +98,26 @@ const ViewCertificate: NextPage<CertificateToShow> = ({ data }) => {
 
   return (
     <>
+      <Head>
+        {/* <!-- HTML Meta Tags --> */}
+        <title>{data?.name} - {data?.courses_io.title}</title>
+        <meta name="description" content="Certificado emitido por $EMPRESA e conferido à $ALUNO." />
+
+        {/* <!-- Facebook Meta Tags --/> */}
+        <meta property="og:url" content="$URL-DO-CERTIFICADO" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="$NOME_ALUNO - $NOME_CURSO" />
+        <meta property="og:description" content="Certificado emitido por $EMPRESA e conferido à $ALUNO." />
+        <meta property="og:image" content="$URL-IMAGE" />
+
+        {/* <!-- Twitter Meta Tags --/> */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="certificado.io" />
+        <meta property="twitter:url" content="$URL-DO-CERTIFICADO" />
+        <meta name="twitter:title" content="$NOME_ALUNO - $NOME_CURSO" />
+        <meta name="twitter:description" content="Certificado emitido por $EMPRESA e conferido à $ALUNO." />
+        <meta name="twitter:image" content="$URL-IMAGE" />
+      </Head>
       <Container>
         <HeaderViewCertificate data={data} />
 

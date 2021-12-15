@@ -1,4 +1,4 @@
-import { Flex, Text, Image, Button, FormControl, FormLabel, Input, Link as A } from '@chakra-ui/react'
+import { Flex, Text, Image, Button, FormControl, FormLabel, Input, Link as A, FormErrorMessage } from '@chakra-ui/react'
 
 import Link from 'next/link'
 import router from 'next/router'
@@ -9,38 +9,110 @@ import { supabase } from '../../utils/supabaseClient'
 const initialError = {
     email: '',
     pass: '',
+    pass2: '',
+    company: '',
+    name: '',
 }
 const FormCadastrar: React.FC = () => {
 
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const [company, setCompany] = useState('')
     const [pass, setPass] = useState('')
+    const [pass2, setPass2] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [errors, setErrors] = useState(initialError)
 
     const global = useGlobal(state => state)
 
+    const checkInputs = () => {
+        let errors = initialError
+
+        if (name === "") {
+            errors = {
+                ...errors,
+                name: 'Preencha seu nome'
+            }
+        }
+
+        if (email === "") {
+            errors = {
+                ...errors,
+                email: 'Preencha seu melhor email'
+            }
+        }
+
+        if (email.indexOf("@") === -1 || email.indexOf(".") === -1) {
+            errors = {
+                ...errors,
+                email: 'Preencha um email válido'
+            }
+        }
+
+        if (company === "") {
+            errors = {
+                ...errors,
+                company: 'Preencha o nome da sua Empresa / Escola / Instituição'
+            }
+        }
+
+        if (pass === "") {
+            errors = {
+                ...errors,
+                pass: 'Preencha uma senha'
+            }
+        }
+
+        if (pass2 === "") {
+            errors = {
+                ...errors,
+                pass2: 'Confirme sua senha'
+            }
+        }
+
+        if (pass !== pass2) {
+            errors = {
+                ...errors,
+                pass: 'As senhas não coincidem',
+                pass2: 'As senhas não coincidem'
+            }
+        }
+
+        setErrors(errors)
+
+        if (JSON.stringify(errors) !== JSON.stringify(initialError)) {
+            return false
+        }
+
+        return true
+    }
+
     const handleSubmit = async () => {
 
-        setIsLoading(true)
+        const res = checkInputs()
+        if (!res) return
 
-        if (!email || !pass) return setErrors({
-            email: 'Preencha suas informações corretamente',
-            pass: 'Preencha suas informações corretamente',
-        })
+        try {
+            setIsLoading(true)
 
-        if (email.indexOf('@') === -1 || email.indexOf('.') === -1) return setErrors({
-            email: 'Preencha um email válido',
-            pass: '',
-        })
+            let { user, error } = await supabase.auth.signUp({
+                email: email,
+                password: pass
+            }, {
+                data: {
+                    name: name,
+                    company: company,
+                }
+            })
 
-        let { user, error } = await supabase.auth.signUp({
-            email: email,
-            password: pass
-        })
+            console.error(error)
+            console.log(user)
 
-        if (error) return console.error(error.message)
-
-        setIsLoading(false)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsLoading(false)
+        }
 
         return global.toggleModalCreatedNewUser()
     }
@@ -95,11 +167,35 @@ const FormCadastrar: React.FC = () => {
                 <Flex
                     direction="column"
                     padding="30px"
+                    gridGap="22px"
                 >
-                    <FormControl>
+                    <FormControl
+                        id="name"
+                        isInvalid={!!errors.name}
+                    >
                         <FormLabel
-                            id="email"
-                            htmlFor="email"
+                            fontWeight="500"
+                            fontSize="14px"
+                            lineHeight="16px"
+                            color="#262626"
+                        >
+                            Nome:
+                        </FormLabel>
+                        <Input
+                            type="text"
+                            defaultValue={name}
+                            onChange={event => setName(event.target.value)}
+                        />
+                        <FormErrorMessage>
+                            {errors.name}
+                        </FormErrorMessage>
+                    </FormControl>
+
+                    <FormControl
+                        id="email"
+                        isInvalid={!!errors.email}
+                    >
+                        <FormLabel
                             fontWeight="500"
                             fontSize="14px"
                             lineHeight="16px"
@@ -108,29 +204,74 @@ const FormCadastrar: React.FC = () => {
                             Email:
                         </FormLabel>
                         <Input
-                            id="email"
                             type="email"
                             defaultValue={email}
                             onChange={event => setEmail(event.target.value)}
                         />
+                        <FormErrorMessage>
+                            {errors.email}
+                        </FormErrorMessage>
                     </FormControl>
 
                     <FormControl
-                        mt="22px"
+                        id="company"
+                        isInvalid={!!errors.company}
+                    >
+                        <FormLabel
+                            fontWeight="500"
+                            fontSize="14px"
+                            lineHeight="16px"
+                            color="#262626"
+                        >
+                            Nome da Empresa / Escola / Instituição:
+                        </FormLabel>
+                        <Input
+                            type="email"
+                            defaultValue={company}
+                            onChange={event => setCompany(event.target.value)}
+                        />
+                        <FormErrorMessage>
+                            {errors.company}
+                        </FormErrorMessage>
+                    </FormControl>
+
+                    <FormControl
+                        id="pass"
+                        isInvalid={!!errors.pass}
+                    >
+                        <FormLabel
+                            fontWeight="500"
+                            fontSize="14px"
+                            lineHeight="16px"
+                            color="#262626"
+                        >
+                            Senha:
+                        </FormLabel>
+                        <Input
+                            type="password"
+                            defaultValue={pass}
+                            onChange={event => setPass(event.target.value)}
+                        />
+                        <FormErrorMessage>
+                            {errors.pass}
+                        </FormErrorMessage>
+                    </FormControl>
+
+                    <FormControl
+                        id="pass2"
+                        isInvalid={!!errors.pass2}
                     >
                         <Flex
                             align="center"
                             justify="space-between"
                         >
                             <FormLabel
-                                id="pass"
-                                htmlFor="pass"
                                 fontWeight="500"
                                 fontSize="14px"
                                 lineHeight="16px"
                                 color="#262626"
                             >
-                                Senha:
+                                Confirme sua senha:
                             </FormLabel>
                             <A
                                 fontWeight="500"
@@ -146,11 +287,13 @@ const FormCadastrar: React.FC = () => {
                             </A>
                         </Flex>
                         <Input
-                            id="pass"
                             type="password"
-                            defaultValue={pass}
-                            onChange={event => setPass(event.target.value)}
+                            defaultValue={pass2}
+                            onChange={event => setPass2(event.target.value)}
                         />
+                        <FormErrorMessage>
+                            {errors.pass2}
+                        </FormErrorMessage>
                     </FormControl>
 
                     <Button
