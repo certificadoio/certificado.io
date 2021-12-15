@@ -19,8 +19,8 @@ const handler: NextApiHandler = async (req, res) => {
 
     const emailRequest = {
         to: req.body.email, // Change to your recipient
-        from: 'luan.alc@hotmail.com', // Change to your verified sender
-        subject: 'CERTIFICADO EMITIDO',
+        from: 'oi@certificado.io', // Change to your verified sender
+        subject: `${req.body.name}, SEU CERTIFICADO FOI EMITIDO!`,
         text: 'Seu certificado foi emitido com sucesso, e você pode conferir clicando no link a seguir',
         html: `
         <h3>CERTIFICADO.IO</h3>
