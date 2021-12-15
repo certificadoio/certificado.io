@@ -21,7 +21,7 @@ const ModalDeleteCertificate: React.FC<IProps> = ({ type }) => {
 
         if (error) return console.error(error.message)
 
-        console.log(data)
+        // console.log(data)
 
         window.location.reload()
     }

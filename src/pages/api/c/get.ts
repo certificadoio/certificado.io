@@ -9,7 +9,7 @@ const handler: NextApiHandler = async (req, res) => {
 
     const { certificateId } = JSON.parse(req.body)
 
-    console.log(certificateId)
+    // console.log(certificateId)
 
     // Criando uma instancia do supabase com a key master
     // para poder ter acesso a todos os dados e retornar

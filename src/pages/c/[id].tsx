@@ -94,7 +94,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 const ViewCertificate: NextPage<CertificateToShow> = ({ data }) => {
 
-  console.log(data)
+  // console.log(data)
 
   return (
     <>

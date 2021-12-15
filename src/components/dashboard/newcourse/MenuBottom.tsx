@@ -125,7 +125,7 @@ const MenuBottom = () => {
                 throw error
             }
 
-            console.log('Successfully uploaded image', filePath, data);
+            // console.log('Successfully uploaded image', filePath, data);
 
             return filePath
 
@@ -185,7 +185,7 @@ const MenuBottom = () => {
             signature: keysImages.fileSignaturePath
         }
 
-        console.log(dataToSend)
+        // console.log(dataToSend)
 
         const response = await supabase
             .from<Theme>('themes_io')

@@ -37,7 +37,7 @@ const CertificatePreview: React.FC<CertificateToShow> = ({ data }) => {
 
     useEffect(() => {
 
-        console.log(state.logoBlob)
+        // console.log(state.logoBlob)
 
         if (state.logoBlob) {
             let blob = new Blob([state.logoBlob], { type: state.logoBlob.type })
@@ -49,7 +49,7 @@ const CertificatePreview: React.FC<CertificateToShow> = ({ data }) => {
 
     useEffect(() => {
 
-        console.log(state.signatureBlob)
+        // console.log(state.signatureBlob)
 
         if (state.signatureBlob) {
             let blob = new Blob([state.signatureBlob], { type: state.signatureBlob.type })

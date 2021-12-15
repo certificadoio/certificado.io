@@ -105,9 +105,6 @@ const FormCadastrar: React.FC = () => {
                 }
             })
 
-            console.error(error)
-            console.log(user)
-
         } catch (error) {
             console.error(error)
         } finally {

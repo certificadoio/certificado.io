@@ -27,7 +27,7 @@ const UploadLogoImg: React.FC<IProps> = ({ id }) => {
         setHasFile(true)
         state.setLogoBlob(files[0])
     }
-    console.log(state)
+    // console.log(state)
     return (
         <FormControl
             id={id}

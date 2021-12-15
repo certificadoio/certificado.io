@@ -5,7 +5,7 @@ const LimitCertificate: React.FC = () => {
 
     const global = useGlobal(state => state)
 
-    console.log(global.certificatesLength)
+    // console.log(global.certificatesLength)
 
     return (
         <>

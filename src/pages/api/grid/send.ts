@@ -34,7 +34,7 @@ const handler: NextApiHandler = async (req, res) => {
 
     const response = await grid.send(emailRequest)
 
-    console.log(response)
+    // console.log(response)
 
     res.status(200).json({ message: 'ok' })
 }

@@ -17,7 +17,7 @@ const Certificado: NextPage = () => {
 
   const global = useGlobal(state => state)
 
-  console.log(global.certificatesLength)
+  // console.log(global.certificatesLength)
   return (
     <AuthProvider>
       <Container>

@@ -9,7 +9,7 @@ interface IProps {
 
 const HeaderViewCertificate: React.FC<IProps> = ({ data }) => {
 
-    console.log(data?.created_at.split('T').shift().split('-')[1])
+    // console.log(data?.created_at.split('T').shift().split('-')[1])
 
     const ORG_NAME = "Certificado.io"
     const CERTIFICATE_NAME = data?.courses_io?.title
