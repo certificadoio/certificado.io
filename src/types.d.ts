@@ -7,7 +7,8 @@ interface IcourseDetails {
     url_course: string
     workload: number
     skills: string
-    owner_id: string | undefined
+    owner_id: string | undefined,
+    company_name: string,
 }
 
 interface IThemeCertificate {

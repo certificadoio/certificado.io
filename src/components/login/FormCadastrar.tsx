@@ -6,6 +6,7 @@ import { useState } from 'react'
 import useGlobal from '../../store/useGlobal'
 import { theme } from '../../styles/theme'
 import { supabase } from '../../utils/supabaseClient'
+
 const initialError = {
     email: '',
     pass: '',
@@ -13,6 +14,7 @@ const initialError = {
     company: '',
     name: '',
 }
+
 const FormCadastrar: React.FC = () => {
 
     const [name, setName] = useState('')
@@ -223,7 +225,6 @@ const FormCadastrar: React.FC = () => {
                             Nome da Empresa / Escola / Instituição:
                         </FormLabel>
                         <Input
-                            type="email"
                             defaultValue={company}
                             onChange={event => setCompany(event.target.value)}
                         />

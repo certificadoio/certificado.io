@@ -31,6 +31,8 @@ const CertificateDetails = () => {
 
     const [certificates, setCertificates] = useState<ICertificates[] | null>(null)
     const [themes, setThemes] = useState<IThemes[] | null>(null)
+    const [companyName, setCompanyName] = useState('')
+    const [courseName, setCourseName] = useState('')
 
     const [data, setData] = useState({
         course_id: "",
@@ -38,7 +40,6 @@ const CertificateDetails = () => {
         email: "",
         created_at: "",
         owner_id: "",
-        theme_id: "",
         id_view: "",
     })
     // Fetch data courses
@@ -61,6 +62,8 @@ const CertificateDetails = () => {
 
         (async () => {
             const user = await supabase.auth.user()
+
+            setCompanyName(user?.user_metadata?.company)
 
             if (global.idToAction) {
                 let { data: certificates, error } = await supabase
@@ -102,12 +105,16 @@ const CertificateDetails = () => {
 
         // Pegar os dados a serem enviados
         const cert = response?.data[0].id || ''
+        console.log(cert);
+        console.log(response);
 
         let sendEmail = await axios.post('/api/grid/send', {
             id: response?.data[0].id_view,
             owner_id: response?.data[0].owner_id,
             email: response?.data[0].email,
             name: response?.data[0].name,
+            company: companyName,
+            course_name: courseName
         })
 
         if (response.data.length !== 0) {
@@ -150,6 +157,8 @@ const CertificateDetails = () => {
             owner_id: response?.data[0].owner_id,
             email: response?.data[0].email,
             name: response?.data[0].name,
+            company: companyName,
+            course_name: courseName
         })
 
         if (response.data.length !== 0) {
@@ -162,22 +171,17 @@ const CertificateDetails = () => {
 
         if (value.length === 0) return
 
-        let { data: themes, error } = await supabase
-            .from<IThemes>('themes_io')
-            .select('*')
-            .eq('course_id', value)
+        const selected = courses.data?.filter(course => course.id === value && course)
 
-        if (error) console.error(error.message)
+        const course_name = selected ? selected[0]?.title : ""
 
-        if (!error) {
-            const theme_id = themes ? themes[0]?.id : undefined
+        if (course_name === "") return
 
-            if (!theme_id) return console.error('Error')
+        setCourseName(course_name)
+        setData({ ...data, course_id: value })
 
-            setData({ ...data, course_id: value, theme_id: theme_id })
-        }
     }
-
+    console.log(data)
     return (
         <>
             <Flex

@@ -6,7 +6,8 @@ const defaultCourse = {
     url_course: '',
     workload: 0,
     skills: '',
-    owner_id: ''
+    owner_id: '',
+    company_name: ''
 }
 
 const defaultTheme = {

@@ -19,6 +19,7 @@ export interface CertificateToShow {
     id_view: string
     courses_io: {
       title: string,
+      company_name: string,
     },
     themes_io: {
       logo: string,
@@ -55,7 +56,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     .select(`
         created_at, name, id_view,
         courses_io (
-          title
+          title, company_name
         ),
         themes_io (
           logo,
@@ -94,7 +95,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 const ViewCertificate: NextPage<CertificateToShow> = ({ data }) => {
 
-  // console.log(data)
+  console.log(data)
 
   return (
     <>
@@ -154,15 +155,16 @@ const ViewCertificate: NextPage<CertificateToShow> = ({ data }) => {
               color="#f7f7f7"
               marginTop="50px"
             >
-              {data?.themes_io.title}
+              {data?.courses_io.title}
             </Text>
+
             <Text
               marginTop="8px"
               fontSize={["12px", "14px", "16px"]}
               fontWeight="500"
               color={theme.blue100}
             >
-              {data?.courses_io.title}
+              {data?.courses_io.company_name}
             </Text>
 
             <CertificatePublicPreview data={data} />
