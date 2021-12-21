@@ -12,7 +12,8 @@ interface Course {
     skills: string
     updated_at?: string
     created_at?: string
-    owner_id: string | undefined
+    owner_id: string | undefined,
+    company_name: string,
 }
 
 interface IProps {
