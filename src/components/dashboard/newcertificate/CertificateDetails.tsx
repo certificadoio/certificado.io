@@ -41,6 +41,7 @@ const CertificateDetails = () => {
         created_at: "",
         owner_id: "",
         id_view: "",
+        theme_id: "",
     })
     // Fetch data courses
 
@@ -177,10 +178,27 @@ const CertificateDetails = () => {
 
         if (course_name === "") return
 
-        setCourseName(course_name)
-        setData({ ...data, course_id: value })
+        try {
+            let { data: themes, error } = await supabase
+                .from<IThemes>('themes_io')
+                .select('*')
+                .eq('course_id', value)
 
+            if (error) console.error(error.message)
+
+            if (!error) {
+                const theme_id = themes ? themes[0]?.id : undefined
+
+                if (!theme_id) return console.error('Error')
+
+                setData({ ...data, course_id: value, theme_id: theme_id })
+                setCourseName(course_name)
+            }
+        } catch (error) {
+            console.error(error)
+        }
     }
+
     console.log(data)
     return (
         <>

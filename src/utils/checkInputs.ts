@@ -3,6 +3,9 @@ const checkCourseDetails = (courseDetails: {}) => {
     let fields = Object.entries(courseDetails)
 
     fields.map(field => {
+
+        if (field[1] === 'company_name') return
+
         if (typeof field[1] === 'string' && field[1] === '') {
             errors.push(`${field[0]} não pode estar vazio`)
         }

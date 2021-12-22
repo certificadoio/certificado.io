@@ -7,9 +7,11 @@ const handler: NextApiHandler = async (req, res) => {
 		res.status(400).json({ message: 'Method not valid' })
 	}
 
-	const { id, owner_id, name, email, company } = req.body
+	const { id, owner_id, name, email, company, course_name } = req.body
 
-	if (!id || !owner_id || !name || !email || !company) return res.status(400).json({ message: 'Invalid request' })
+	console.log(id, owner_id, name, email, company, course_name)
+
+	if (!id || !owner_id || !name || !email || !company || !course_name) return res.status(400).json({ message: 'Invalid request' })
 
 	// Api serverless responsável por enviar os emails na emissão de certificado
 	// Então vamos receber uma request do tipo post
@@ -21,8 +23,8 @@ const handler: NextApiHandler = async (req, res) => {
 
 	const emailRequest = {
 		to: req.body.email, // Change to your recipient
-		from: 'Oi<oi@certificado.io>', // Change to your verified sender
-		subject: `${req.body.company}: Você recebeu um certificado.`,
+		from: 'Certificado.io<oi@certificado.io>', // Change to your verified sender
+		subject: `${company}: Você recebeu um certificado.`,
 		text: 'Olá, você recebeu um certificado.',
 		html: `
         
