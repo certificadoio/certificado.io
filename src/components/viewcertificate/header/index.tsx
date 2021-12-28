@@ -4,6 +4,7 @@ import Container from './Container'
 import Logo from './Logo'
 import { FaWhatsapp, FaTwitter, FaLinkedin, FaFacebookSquare } from 'react-icons/fa'
 import { useState } from 'react'
+import { WhatsappShareButton, FacebookShareButton, TwitterShareButton } from 'react-share'
 
 interface IProps {
     data: any
@@ -81,53 +82,68 @@ const HeaderViewCertificate: React.FC<IProps> = ({ data }) => {
                             mt="35px"
                             direction="column"
                         >
-                            <Flex
-                                align="center"
-                                height="37px"
-                                pl="27px"
-
-                                _hover={{
-                                    background: '#F5F5F5'
-                                }}
-
-                                cursor="pointer"
+                            <WhatsappShareButton
+                                url={CERTIFICATE_URL}
+                                title="Certificado Emitido"
                             >
-                                <FaWhatsapp
-                                    color="#7287D0"
-                                    fontSize="18px"
-                                />
-                                <Text
-                                    color="#666666"
-                                    fontSize="14px"
-                                    fontWeight="500"
-                                    ml="8px"
-                                >
-                                    Whatsapp
-                                </Text>
-                            </Flex>
+                                <Flex
+                                    align="center"
+                                    height="37px"
+                                    pl="27px"
 
-                            <Flex
-                                align="center"
-                                height="37px"
-                                pl="27px"
-                                cursor="pointer"
-                                _hover={{
-                                    background: '#F5F5F5'
-                                }}
-                            >
-                                <FaTwitter
-                                    color="#7287D0"
-                                    fontSize="18px"
-                                />
-                                <Text
-                                    color="#666666"
-                                    fontSize="14px"
-                                    fontWeight="500"
-                                    ml="8px"
+                                    onClick={() => setShareCertificateShowing(!shareCertificateShowing)}
+
+                                    _hover={{
+                                        background: '#F5F5F5'
+                                    }}
+
+                                    cursor="pointer"
                                 >
-                                    Twitter
-                                </Text>
-                            </Flex>
+                                    <FaWhatsapp
+                                        color="#7287D0"
+                                        fontSize="18px"
+                                    />
+                                    <Text
+                                        color="#666666"
+                                        fontSize="14px"
+                                        fontWeight="500"
+                                        ml="8px"
+                                    >
+                                        Whatsapp
+                                    </Text>
+                                </Flex>
+                            </WhatsappShareButton>
+
+                            <TwitterShareButton
+                                url={CERTIFICATE_URL}
+                                title="Certificado Emitido"
+                            >
+                                <Flex
+                                    align="center"
+                                    height="37px"
+                                    pl="27px"
+                                    cursor="pointer"
+
+                                    onClick={() => setShareCertificateShowing(!shareCertificateShowing)}
+
+                                    _hover={{
+                                        background: '#F5F5F5'
+                                    }}
+                                >
+                                    <FaTwitter
+                                        color="#7287D0"
+                                        fontSize="18px"
+                                    />
+                                    <Text
+                                        color="#666666"
+                                        fontSize="14px"
+                                        fontWeight="500"
+                                        ml="8px"
+                                    >
+                                        Twitter
+                                    </Text>
+                                </Flex>
+                            </TwitterShareButton>
 
                             <A
                                 target="_blank"
@@ -158,29 +174,36 @@ const HeaderViewCertificate: React.FC<IProps> = ({ data }) => {
                                 </Text>
                             </A>
 
-                            <Flex
-                                align="center"
-                                height="37px"
-                                pl="27px"
-                                cursor="pointer"
-                                _hover={{
-                                    background: '#F5F5F5'
-                                }}
+                            <FacebookShareButton
+                                url={CERTIFICATE_URL}
+                                title="Certificado Emitido"
                             >
-                                <FaFacebookSquare
-                                    color="#7287D0"
-                                    fontSize="18px"
-                                />
-                                <Text
-                                    color="#666666"
-                                    fontSize="14px"
-                                    fontWeight="500"
-                                    ml="8px"
-                                >
-                                    Facebook
-                                </Text>
-                            </Flex>
+                                <Flex
+                                    align="center"
+                                    height="37px"
+                                    pl="27px"
+                                    cursor="pointer"
 
+                                    onClick={() => setShareCertificateShowing(!shareCertificateShowing)}
+
+                                    _hover={{
+                                        background: '#F5F5F5'
+                                    }}
+                                >
+                                    <FaFacebookSquare
+                                        color="#7287D0"
+                                        fontSize="18px"
+                                    />
+                                    <Text
+                                        color="#666666"
+                                        fontSize="14px"
+                                        fontWeight="500"
+                                        ml="8px"
+                                    >
+                                        Facebook
+                                    </Text>
+                                </Flex>
+                            </FacebookShareButton>
 
                         </Flex>
                     </Flex>
