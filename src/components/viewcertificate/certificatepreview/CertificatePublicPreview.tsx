@@ -49,6 +49,7 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
 
     return (
         <Flex
+            id="publicCertificate"
             //Container do certificado !!!!!
             marginTop={["25px", "40px", "55px"]}
             width="100%"

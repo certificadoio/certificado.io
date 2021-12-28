@@ -7,10 +7,11 @@ import { useState } from 'react'
 import { WhatsappShareButton, FacebookShareButton, TwitterShareButton } from 'react-share'
 
 interface IProps {
-    data: any
+    data: any,
+    download: () => void,
 }
 
-const HeaderViewCertificate: React.FC<IProps> = ({ data }) => {
+const HeaderViewCertificate: React.FC<IProps> = ({ data, download }) => {
 
     // console.log(data?.created_at.split('T').shift().split('-')[1])
     const [shareCertificateShowing, setShareCertificateShowing] = useState(false)
@@ -22,7 +23,7 @@ const HeaderViewCertificate: React.FC<IProps> = ({ data }) => {
     const CREATED_MONTH = data?.created_at.split('T').shift().split('-')[1]
     const EXPIRATION_YEAR = ""
     const EXPIRATION_MONTH = ""
-    const CERTIFICATE_URL = `${process.env.NEXT_PUBLIC_HOST}/c/${data?.id_view}`
+    const CERTIFICATE_URL = `app.certificado.io/c/${data?.id_view}`
 
     const URL_LINKEDIN = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${CERTIFICATE_NAME}&organizationName=${ORG_NAME}&issueYear=${CREATED_YEAR}&issueMonth=${CREATED_MONTH}&expirationYear=${EXPIRATION_YEAR}&expirationMonth=${EXPIRATION_MONTH}&certUrl=${CERTIFICATE_URL}&certId=${CERTIFICATE_ID}`
 
@@ -35,10 +36,11 @@ const HeaderViewCertificate: React.FC<IProps> = ({ data }) => {
                     display={["none", "flex"]}
                 >
                     <Flex
-                        display={["none", "none", "flex"]}
+                        display="none"
                         width="max-content"
                         mr="50px"
                         cursor="pointer"
+                        onClick={download}
                     >
                         <Image src="/assets/icons/downloadPDF.svg" alt="Download PDF" />
                         <Text

@@ -11,6 +11,8 @@ import Head from 'next/head'
 import HeaderViewCertificate from '../../components/viewcertificate/header'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { createClient } from '@supabase/supabase-js'
+import { jsPDF } from "jspdf";
+import { useEffect } from 'react'
 
 export interface CertificateToShow {
   data?: {
@@ -95,7 +97,21 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 const ViewCertificate: NextPage<CertificateToShow> = ({ data }) => {
 
-  console.log(data)
+  // console.log(data)
+
+  const handleDownloadPDF = () => {
+    var doc = new jsPDF();
+
+    var source = window.document.getElementById("publicCertificate");
+
+    if (!source) return
+
+    doc.html(source, {
+      callback: function (doc) {
+        doc.save();
+      }
+    });
+  }
 
   return (
     <>
@@ -119,8 +135,12 @@ const ViewCertificate: NextPage<CertificateToShow> = ({ data }) => {
         <meta name="twitter:description" content="Certificado emitido por $EMPRESA e conferido à $ALUNO." />
         <meta name="twitter:image" content="$URL-IMAGE" />
       </Head>
+
       <Container>
-        <HeaderViewCertificate data={data} />
+        <HeaderViewCertificate
+          download={handleDownloadPDF}
+          data={data}
+        />
 
         <Flex
           position="relative"
@@ -167,7 +187,9 @@ const ViewCertificate: NextPage<CertificateToShow> = ({ data }) => {
               {data?.courses_io.company_name}
             </Text>
 
-            <CertificatePublicPreview data={data} />
+            <CertificatePublicPreview
+              data={data}
+            />
 
           </Flex>
         </Flex>
