@@ -23,15 +23,13 @@ const Header: React.FC = () => {
                 justify="space-between"
                 px="25px"
             >
-                <Link href="/login">
-                    <A>
-                        <Image
-                            src="/assets/logoMenuDashboard.svg"
-                            alt="logo"
-                            width="158px"
-                        />
-                    </A>
-                </Link>
+                <A href="https://certificado.io/">
+                    <Image
+                        src="/assets/logoMenuDashboard.svg"
+                        alt="logo"
+                        width="158px"
+                    />
+                </A>
 
 
                 <A href="https://certificado.io/">

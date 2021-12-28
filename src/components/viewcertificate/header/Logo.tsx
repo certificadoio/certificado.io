@@ -10,15 +10,13 @@ const Logo: React.FC = () => {
         <Box
             display={[global.showMobileMenu ? 'none' : 'block', global.showMobileMenu ? 'none' : 'block', "flex"]}
         >
-            <Link href="/">
-                <A>
-                    <Image
-                        src="/assets/logoMenuDashboard.svg"
-                        alt="logo"
-                        width="158px"
-                    />
-                </A>
-            </Link>
+            <A href="https://certificado.io/">
+                <Image
+                    src="/assets/logoMenuDashboard.svg"
+                    alt="logo"
+                    width="158px"
+                />
+            </A>
         </Box>
     )
 }
