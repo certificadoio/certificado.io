@@ -33,6 +33,7 @@ const CertificateDetails = () => {
     const [themes, setThemes] = useState<IThemes[] | null>(null)
     const [companyName, setCompanyName] = useState('')
     const [courseName, setCourseName] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const [data, setData] = useState({
         course_id: "",
@@ -98,28 +99,36 @@ const CertificateDetails = () => {
             return console.error('Nenhum campo pode ser vazio')
         }
 
-        const response = await supabase
-            .from('certificates_io')
-            .insert([data])
+        try {
+            setLoading(true)
 
-        if (response.error) return console.error(response.error)
+            const response = await supabase
+                .from('certificates_io')
+                .insert([data])
 
-        // Pegar os dados a serem enviados
-        const cert = response?.data[0].id || ''
-        console.log(cert);
-        console.log(response);
+            if (response.error) return console.error(response.error)
 
-        let sendEmail = await axios.post('/api/grid/send', {
-            id: response?.data[0].id_view,
-            owner_id: response?.data[0].owner_id,
-            email: response?.data[0].email,
-            name: response?.data[0].name,
-            company: companyName,
-            course_name: courseName
-        })
+            // Pegar os dados a serem enviados
+            const cert = response?.data[0].id || ''
+            console.log(cert);
+            console.log(response);
 
-        if (response.data.length !== 0) {
-            global.toggleModalCertificateCreated()
+            let sendEmail = await axios.post('/api/grid/send', {
+                id: response?.data[0].id_view,
+                owner_id: response?.data[0].owner_id,
+                email: response?.data[0].email,
+                name: response?.data[0].name,
+                company: companyName,
+                course_name: courseName
+            })
+
+            if (response.data.length !== 0) {
+                global.toggleModalCertificateCreated()
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -356,7 +365,7 @@ const CertificateDetails = () => {
                         background="#BBC564"
                         borderRadius="4px"
 
-
+                        isLoading={loading}
 
                         _hover={{
                             background: `${theme.green700}`
