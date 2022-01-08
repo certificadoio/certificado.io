@@ -84,8 +84,14 @@ const CertificateDetails = () => {
             let dataAtual = new Date(Date.now())
             let dataFormated = dataAtual.toLocaleDateString().split('/')
             const dataToSet = dataFormated[2] + '-' + dataFormated[1] + '-' + dataFormated[0]
+            const shortUrlId = shortid.generate().toUpperCase()
 
-            setData({ ...data, owner_id: user?.id || "", created_at: dataToSet, id_view: shortid.generate() })
+            setData({
+                ...data,
+                owner_id: user?.id || "",
+                created_at: dataToSet,
+                id_view: shortUrlId
+            })
         })()
 
     }, [])
