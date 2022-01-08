@@ -36,7 +36,6 @@ const HeaderViewCertificate: React.FC<IProps> = ({ data, download }) => {
                     display={["none", "flex"]}
                 >
                     <Flex
-                        display="none"
                         width="max-content"
                         mr="50px"
                         cursor="pointer"

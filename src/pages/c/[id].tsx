@@ -100,17 +100,7 @@ const ViewCertificate: NextPage<CertificateToShow> = ({ data }) => {
   // console.log(data)
 
   const handleDownloadPDF = () => {
-    var doc = new jsPDF();
-
-    var source = window.document.getElementById("publicCertificate");
-
-    if (!source) return
-
-    doc.html(source, {
-      callback: function (doc) {
-        doc.save();
-      }
-    });
+    print()
   }
 
   return (
