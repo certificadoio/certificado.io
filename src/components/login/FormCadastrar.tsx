@@ -80,6 +80,14 @@ const FormCadastrar: React.FC = () => {
             }
         }
 
+        if (pass.length < 6 || pass2.length < 6) {
+            errors = {
+                ...errors,
+                pass: 'Sua senha precisa ter pelo menos 6 caracteres',
+                pass2: 'Sua senha precisa ter pelo menos 6 caracteres'
+            }
+        }
+
         setErrors(errors)
 
         if (JSON.stringify(errors) !== JSON.stringify(initialError)) {
