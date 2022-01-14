@@ -7,17 +7,21 @@ import { supabase } from '../../../utils/supabaseClient'
 
 import Link from 'next/link'
 
+interface ICertificateToShowProps {
+    data: CertificateToShow | undefined
+}
+
 interface IState {
     logo?: string,
     signature?: string
 }
 
-const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
+const CertificatePublicPreview: React.FC<ICertificateToShowProps> = ({ data }) => {
 
     const [imagesUrl, setImagesUrl] = useState<IState>({})
 
-    let dateString = data?.created_at.substring(0, 10)
-    let dateArray = dateString?.split('-') // yyyy-MM-dd
+    let dateString = data?.created_at?.substring(0, 10)
+    let dateArray = dateString ? dateString?.split('-') : undefined // yyyy-MM-dd
     let localDate = dateArray ? `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}` : ''
 
     useEffect(() => {
@@ -25,8 +29,8 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
             let logoUrl = ''
             let signatureUrl = ''
 
-            const logo = data?.themes_io.logo || ''
-            const signature = data?.themes_io.signature || ''
+            const logo = data?.themes_io?.logo || ''
+            const signature = data?.themes_io?.signature || ''
 
             if (logo) {
                 const { data, error } = await supabase.storage.from('public/images').download(logo)
@@ -86,7 +90,7 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                         <Box
                             width="153.61%"
                             height="116%"
-                            background={data?.themes_io ? data?.themes_io.secondary_bg_color : data?.themes_io.secondary_bg_color}
+                            background={data?.themes_io ? data?.themes_io?.secondary_bg_color : data?.themes_io?.secondary_bg_color}
                             borderRadius="500px / 85px"
                             position="absolute"
                             mt="-400px"
@@ -96,7 +100,7 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                         <Box
                             width="153.61%"
                             height="116%"
-                            background={data?.themes_io ? data?.themes_io.primary_bg_color : data?.themes_io.primary_bg_color}
+                            background={data?.themes_io ? data?.themes_io?.primary_bg_color : data?.themes_io?.primary_bg_color}
                             borderRadius="500px / 290px"
                             position="absolute"
                             mt="-400px"
@@ -135,7 +139,7 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                                         align="center"
                                         justify="center"
                                         fontWeight="700"
-                                        color={data?.themes_io ? data?.themes_io.primary_color : ''}
+                                        color={data?.themes_io ? data?.themes_io?.primary_color : ''}
                                     >
                                         <Text>LOGO</Text>
                                     </Flex>
@@ -155,27 +159,27 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                             <Text
                                 fontWeight="700"
                                 fontSize="20px"
-                                color={data?.themes_io ? data?.themes_io.primary_color : data?.themes_io.primary_color}
+                                color={data?.themes_io ? data?.themes_io?.primary_color : data?.themes_io?.primary_color}
                             >
                                 {data?.name ? data?.name : 'Emerson Lemos de Andrade'}
                             </Text>
 
                             <Text
                                 mt="8px"
-                                color={data?.themes_io ? data?.themes_io.secondary_color : data?.themes_io.secondary_color}
+                                color={data?.themes_io ? data?.themes_io?.secondary_color : data?.themes_io?.secondary_color}
                                 fontWeight="500"
                                 fontSize="12px"
                             >
-                                {data?.themes_io?.graduated_in ? data?.themes_io.graduated_in : data?.themes_io.graduated_in ? data?.themes_io.graduated_in : 'Graduado em'}
+                                {data?.themes_io?.graduated_in ? data?.themes_io?.graduated_in : data?.themes_io?.graduated_in ? data?.themes_io.graduated_in : 'Graduado em'}
                             </Text>
 
                             <Text
                                 mt="4px"
-                                color={data?.themes_io ? data?.themes_io.primary_color : data?.themes_io.primary_color}
+                                color={data?.themes_io ? data?.themes_io?.primary_color : data?.themes_io?.primary_color}
                                 fontWeight="700"
                                 fontSize="15px"
                             >
-                                {data?.courses_io?.title ? data?.courses_io.title : data?.courses_io.title ? data?.courses_io.title : 'Curso de Kali Linux'}
+                                {data?.courses_io?.title ? data?.courses_io?.title : data?.courses_io?.title ? data?.courses_io?.title : 'Curso de Kali Linux'}
                             </Text>
 
                             <Flex
@@ -197,9 +201,9 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                             <Text
                                 fontSize="10px"
                                 mt="10px"
-                                color={data?.themes_io ? data?.themes_io?.secondary_color : data?.themes_io.secondary_color}
+                                color={data?.themes_io ? data?.themes_io?.secondary_color : data?.themes_io?.secondary_color}
                             >
-                                {data?.themes_io?.footer_signature ? data?.themes_io?.footer_signature : data?.themes_io.footer_signature ? data?.themes_io.footer_signature : 'Coordenador do curso'}
+                                {data?.themes_io?.footer_signature ? data?.themes_io?.footer_signature : data?.themes_io?.footer_signature ? data?.themes_io?.footer_signature : 'Coordenador do curso'}
                             </Text>
 
                         </Flex>
@@ -213,7 +217,7 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                             fontWeight="700"
                             color="#fff"
                         >
-                            {data?.themes_io?.title ? data?.themes_io?.title : data?.themes_io.title ? data?.themes_io.title : 'CERTIFICADO DE CONCLUSÃO'}
+                            {data?.themes_io?.title ? data?.themes_io?.title : data?.themes_io?.title ? data?.themes_io?.title : 'CERTIFICADO DE CONCLUSÃO'}
                         </Text>
 
                         <Text
@@ -224,7 +228,7 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                             fontWeight="12px"
                             color="rgba(255,255,255,0.5)"
                         >
-                            {data?.themes_io?.subtitle ? data?.themes_io?.subtitle : data?.themes_io.subtitle ? data?.themes_io.subtitle : 'Subtitle'}
+                            {data?.themes_io?.subtitle ? data?.themes_io?.subtitle : data?.themes_io?.subtitle ? data?.themes_io?.subtitle : 'Subtitle'}
                         </Text>
 
                         <Flex
@@ -235,7 +239,7 @@ const CertificatePublicPreview: React.FC<CertificateToShow> = ({ data }) => {
                             justify="space-between"
                             paddingX="50px"
                             fontSize="10px"
-                            color={data?.themes_io.secondary_color}
+                            color={data?.themes_io?.secondary_color}
                             textAlign="center"
                         >
                             <Text>Data de emissão: {localDate}</Text>

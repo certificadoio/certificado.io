@@ -9,7 +9,7 @@ const handler: NextApiHandler = async (req, res) => {
 
     const { certificateId } = JSON.parse(req.body)
 
-    // console.log(certificateId)
+    console.log(certificateId)
 
     // Criando uma instancia do supabase com a key master
     // para poder ter acesso a todos os dados e retornar
@@ -22,13 +22,22 @@ const handler: NextApiHandler = async (req, res) => {
     let { data, error } = await supabase
         .from('certificates_io')
         .select(`
-            created_at, name, id_view,
-            courses_io (
-              title
-            ),
-            themes_io (
-              title
-            )`)
+        created_at, name, id_view,
+        courses_io (
+          title, company_name
+        ),
+        themes_io (
+          logo,
+          title,
+          subtitle,
+          signature,
+          graduated_in,
+          footer_signature,
+          primary_color,
+          secondary_color,
+          primary_bg_color,
+          secondary_bg_color
+        )`)
         .eq('id_view', certificateId)
 
     if (error) console.error(error)

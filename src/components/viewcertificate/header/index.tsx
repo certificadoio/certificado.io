@@ -19,8 +19,8 @@ const HeaderViewCertificate: React.FC<IProps> = ({ data, download }) => {
     const ORG_NAME = "Certificado.io"
     const CERTIFICATE_NAME = data?.courses_io?.title
     const CERTIFICATE_ID = data?.id_view
-    const CREATED_YEAR = data?.created_at.split('T').shift().split('-')[0]
-    const CREATED_MONTH = data?.created_at.split('T').shift().split('-')[1]
+    const CREATED_YEAR = data?.created_at?.split('T')?.shift()?.split('-')[0]
+    const CREATED_MONTH = data?.created_at?.split('T')?.shift()?.split('-')[1]
     const EXPIRATION_YEAR = ""
     const EXPIRATION_MONTH = ""
     const CERTIFICATE_URL = `app.certificado.io/c/${data?.id_view}`
