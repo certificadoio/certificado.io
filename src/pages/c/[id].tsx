@@ -14,6 +14,7 @@ import { createClient } from '@supabase/supabase-js'
 import { jsPDF } from "jspdf";
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+
 export interface CertificateToShow {
   created_at: string,
   name: string,

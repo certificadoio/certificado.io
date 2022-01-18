@@ -4,7 +4,11 @@ import { CertificateToShow } from '../../../pages/c/[id]'
 import useNewCourse from '../../../store/useNewCourse'
 import { supabase } from '../../../utils/supabaseClient'
 
-const CertificatePreview: React.FC<CertificateToShow> = ({ data }) => {
+interface ICertificateToShowProps {
+    data: CertificateToShow
+}
+
+const CertificatePreview: React.FC<ICertificateToShowProps> = ({ data }) => {
 
     const state = useNewCourse(state => state)
     const [logoImg, setLogoImg] = useState(null)
