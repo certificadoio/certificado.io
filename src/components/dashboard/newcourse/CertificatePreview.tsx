@@ -5,7 +5,7 @@ import useNewCourse from '../../../store/useNewCourse'
 import { supabase } from '../../../utils/supabaseClient'
 
 interface ICertificateToShowProps {
-    data: CertificateToShow
+    data?: CertificateToShow
 }
 
 const CertificatePreview: React.FC<ICertificateToShowProps> = ({ data }) => {
