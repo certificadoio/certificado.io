@@ -9,7 +9,7 @@ const handler: NextApiHandler = async (req, res) => {
 
 	const { id, owner_id, name, email, company, course_name } = req.body
 
-	console.log(id, owner_id, name, email, company, course_name)
+	// console.log(id, owner_id, name, email, company, course_name)
 
 	if (!id || !owner_id || !name || !email || !company || !course_name) return res.status(400).json({ message: 'Invalid request' })
 
@@ -19,7 +19,7 @@ const handler: NextApiHandler = async (req, res) => {
 	const apikey = process.env.SENDGRID_API_KEY || ''
 	grid.setApiKey(apikey)
 
-	console.log(req.body)
+	// console.log(req.body)
 
 	const emailRequest = {
 		to: req.body.email, // Change to your recipient

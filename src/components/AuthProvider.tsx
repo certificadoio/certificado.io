@@ -27,7 +27,7 @@ const AuthProvider: React.FC = ({ children }) => {
         getUser()
     }, [])
 
-    console.log(state.courseDetails)
+    // console.log(state.courseDetails)
     return (
         <>
             {showContent &&

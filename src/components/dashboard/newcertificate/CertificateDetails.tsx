@@ -116,8 +116,8 @@ const CertificateDetails = () => {
 
             // Pegar os dados a serem enviados
             const cert = response?.data[0].id || ''
-            console.log(cert);
-            console.log(response);
+            // console.log(cert);
+            // console.log(response);
 
             let sendEmail = await axios.post('/api/grid/send', {
                 id: response?.data[0].id_view,
@@ -214,7 +214,7 @@ const CertificateDetails = () => {
         }
     }
 
-    console.log(data)
+    // console.log(data)
     return (
         <>
             <Flex
